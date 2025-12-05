@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import mongo from './utils/db.js';
 import userRoutes from './routes/user.routes.js'
+import companyRoutes from './routes/company.routes.js';
 
 dotenv.config({});
 
@@ -31,3 +32,4 @@ app.listen(port,()=>{
 
 //APIS Routes
 app.use('/api/v1/user',userRoutes);
+app.use('/api/v1/company',companyRoutes);
