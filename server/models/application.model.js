@@ -12,13 +12,13 @@ const applicationSchema= new mongoose.Schema({
         ref:"User",
         required:true,
     },
-
+ 
     status:{
         type:String,
-        enum:['pendind','accepted','rejected'],
+        enum:['pending','accepted','rejected'],
         default:'pending',
     }
 
 },{timestamps:true});
 
-export default Application= mongoose.model('Application',applicationSchema);
+export const Application= mongoose.model('Application',applicationSchema);

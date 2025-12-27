@@ -11,7 +11,7 @@ export const register = async (req, res) => {
       return res.status(400).json({
         message: "Something is missing",
         Success: false,
-      });
+      }); 
     }
 
     const existingUser = await User.findOne({ email });
