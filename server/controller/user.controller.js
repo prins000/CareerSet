@@ -54,7 +54,7 @@ export const login = async (req, res) => {
 
     let existingUser = await User.findOne({ email });
     if (!existingUser) {
-      return res.send(404).json({
+      return res.status(404).json({
         message: "User not found, please register",
         success: false,
       });
