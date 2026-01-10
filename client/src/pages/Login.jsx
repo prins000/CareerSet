@@ -1,17 +1,18 @@
 import React from "react";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/general/Navbar";
 import { useState } from "react";
 import { USER_API_ENDPOINT } from "@/utils/endpoints.js";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useSelector, useDispatch } from "react-redux";
-import { setLoading } from "@/redux/slices/authSlice";
+import { setLoading,setUser } from "@/redux/slices/authSlice";
 import { Loader2 } from "lucide-react";
 
 const Login = () => {
   let navigate = useNavigate();
   let auth = useSelector((state) => state.auth.loading);
+  
   let dispatch = useDispatch();
 
   let [input, setInput] = useState({
@@ -38,6 +39,7 @@ const Login = () => {
 
       if (res.data.success) {
         toast.success(res.data.message);
+        dispatch(setUser(true));
         navigate("/");
       }
 

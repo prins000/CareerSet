@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Button } from "./ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Button } from "../ui/button";
 import { LogOut, User2, Menu, X } from "lucide-react";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "@/redux/slices/authSlice";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const loged = false; // later replace with auth state
+  let loged =useSelector((state)=>state.auth.user); 
+  let dispatch= useDispatch();
 
   return (
     <header className="border-b bg-white">
@@ -21,9 +24,9 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6">
           <ul className="flex gap-6 text-medium">
-            <li className="cursor-pointer hover:text-[#6A38C2]">Home</li>
-            <li className="cursor-pointer hover:text-[#6A38C2]">Jobs</li>
-            <li className="cursor-pointer hover:text-[#6A38C2]">Browse</li>
+            <li className="cursor-pointer hover:text-[#6A38C2]"><Link to="/">Home</Link></li>
+            <li className="cursor-pointer hover:text-[#6A38C2]"><Link to="/jobs">Jobs</Link></li>
+            <li className="cursor-pointer hover:text-[#6A38C2]"><Link to="/">Brows</Link></li>
           </ul>
 
           {loged ? (
@@ -48,10 +51,13 @@ const Navbar = () => {
                 </div>
 
                 <div className="flex flex-col mt-3">
-                  <Button variant="ghost" className="justify-start gap-2">
-                    <User2 size={16} /> View Profile
-                  </Button>
-                  <Button variant="ghost" className="justify-start gap-2">
+                  <Link to="/profile">
+                    <Button variant="ghost" className="justify-start gap-2">
+                      <User2 size={16} /> View Profile
+                    </Button>
+                  </Link>
+
+                  <Button variant="ghost" onclick={()=>dispatch(setUser(false))} className="justify-start gap-2">
                     <LogOut size={16} /> Logout
                   </Button>
                 </div>

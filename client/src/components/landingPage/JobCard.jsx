@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { MapPin, Briefcase } from "lucide-react";
 
 const JobCard = ({ job }) => {

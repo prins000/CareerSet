@@ -1,7 +1,7 @@
-import Footer from '@/components/Footer'
-import Hero from '@/components/Hero'
-import LatestJobs from '@/components/latestJob'
-import Navbar from '@/components/Navbar'
+import Footer from '@/components/general/Footer'
+import Hero from '@/components/landingPage/Hero'
+import LatestJobs from '@/components/landingPage/LatestJob'
+import Navbar from '@/components/general/Navbar'
 import React from 'react'
 
 const Home = () => {
