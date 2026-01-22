@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "@/components/general/Navbar";
 import Footer from "@/components/general/Footer";
+import UpdateProfile from "@/components/general/UpdateProfile";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Mail, Phone, Briefcase } from "lucide-react";
@@ -9,6 +10,7 @@ import { Link } from "react-router-dom";
 
 const Profile = () => {
   const [showAppliedJobs, setShowAppliedJobs] = useState(false);
+  const[open,setOpen]=useState(false);
 
   // Dummy user data (matches your schema)
   const user = {
@@ -89,6 +91,7 @@ const Profile = () => {
             <Button
               variant="outline"
               className="border-[#6A38C2] text-[#6A38C2]"
+              onClick={() => setOpen(true)}
             >
               Edit Profile
             </Button>
@@ -215,7 +218,7 @@ const Profile = () => {
           </div>
         )
       )}
-
+        <UpdateProfile open={open} setOpen={setOpen} />
       <Footer />
     </>
   );

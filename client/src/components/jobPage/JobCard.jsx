@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const JobCard = ({ job }) => {
+  let id=1;
   return (
     <div className="border rounded-2xl p-5 bg-white hover:shadow-lg transition flex flex-col gap-4">
       
@@ -45,7 +46,7 @@ const JobCard = ({ job }) => {
       {/* Actions */}
       <div className="flex gap-3 mt-2">
         <Link
-          to={`/job/${job.id}`}
+          to={`/jobs/${id}`}
           className="px-4 py-2 text-sm font-semibold border border-[#6A38C2] text-[#6A38C2] rounded-md hover:bg-[#6A38C2] hover:text-white transition"
         >
           View Details

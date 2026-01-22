@@ -28,6 +28,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_ENDPOINT}/login`, input, {
@@ -39,7 +40,7 @@ const Login = () => {
 
       if (res.data.success) {
         toast.success(res.data.message);
-        dispatch(setUser(true));
+        dispatch(setUser(res.data.existingUser));
         navigate("/");
       }
 

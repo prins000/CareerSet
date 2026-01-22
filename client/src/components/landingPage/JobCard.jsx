@@ -1,8 +1,10 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { MapPin, Briefcase } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const JobCard = ({ job }) => {
+  let id=1;
   return (
     <div className="border rounded-xl p-5 flex flex-col gap-4 hover:shadow-md transition">
       {/* Company */}
@@ -31,12 +33,14 @@ const JobCard = ({ job }) => {
 
       {/* Actions */}
       <div className="mt-auto">
-        <Button
+        <Link to= {`/jobs/${id}`}>
+           <Button
           variant="ghost"
           className="w-full text-[#6A38C2] bg-[#6A38C2]/10"
         >
           View Details
         </Button>
+        </Link>
       </div>
     </div>
   );

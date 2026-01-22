@@ -128,7 +128,7 @@ export const updateProfile = async (req, res) => {
 
     // req ni body mathi kadhel skills array e string formate ma ave pachi bhale db ma array apyo  hoy db ma array apyo che pan skills string ma avse mate pahri tene array ma convert karva karna ke store to karavu padse ne
   
-    let skillsArray= skills.split(",");
+    
     let user = await User.findById(userId);
 
     if(!user){
@@ -142,7 +142,7 @@ export const updateProfile = async (req, res) => {
     user.email=email;
     user.mobile=mobile;
     user.profile.bio=bio;
-    user.profile.skills=skillsArray;
+    user.profile.skills=skills;
 
     await user.save();
 
