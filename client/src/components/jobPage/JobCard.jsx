@@ -2,7 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const JobCard = ({ job }) => {
-  let id=1;
+ 
+  let posted =(date)=>{
+    const createdAt= new Date(date);
+    const currentDate= new Date();
+    const diffTime= Math.abs(currentDate - createdAt);
+    const diffDays= Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  }
+
+  let id=job._id ;
   return (
     <div className="border rounded-2xl p-5 bg-white hover:shadow-lg transition flex flex-col gap-4">
       
@@ -17,7 +26,7 @@ const JobCard = ({ job }) => {
         <div className="flex-1">
           <h3 className="font-semibold text-lg">{job.title}</h3>
           <p className="text-sm text-gray-500">
-            {job.company} • {job.location}
+            {job.company.name} • {job.location}
           </p>
         </div>
       </div>
@@ -34,7 +43,7 @@ const JobCard = ({ job }) => {
           ₹ {job.salary || "Not Disclosed"}
         </span>
         <span className="px-3 py-1 rounded-full bg-gray-100">
-          Posted {job.posted || "2 days ago"}
+          Posted {posted(job.createdAt)==0?"Today": posted(job.createdAt)+" days ago"}
         </span>
       </div>
 

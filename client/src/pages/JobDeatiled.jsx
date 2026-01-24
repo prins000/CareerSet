@@ -1,64 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "@/components/general/Navbar";
 import Footer from "@/components/general/Footer";
+import axios from "axios";
+import { JOB_API_ENDPOINT } from "@/utils/endpoints";
 
 
-const JobDetails = () => {
-
- const jobs = [
-  {
-    _id: "1",
-    title: "Frontend Developer",
-    description:
-      "We are looking for a Frontend Developer who is proficient in React and Tailwind CSS.",
-    requirements: [
-      "Strong knowledge of React",
-      "Good understanding of JavaScript",
-      "Experience with Tailwind CSS",
-    ],
-    salary: "10–15 LPA",
-    location: "Remote",
-    jobType: "Full-time",
-    position: 2,
-    company: {
-      name: "Google",
-      logo: "https://logo.clearbit.com/google.com",
-    },
-    createdBy: "admin",
-    createdAt: "2026-01-08",
-  },
-
-  {
-    _id: "2",
-    title: "Backend Developer",
-    description:
-      "Backend developer needed with experience in Node.js and MongoDB.",
-    requirements: [
-      "Node.js",
-      "MongoDB",
-      "REST APIs",
-    ],
-    salary: "12–18 LPA",
-    location: "Bangalore",
-    jobType: "Full-time",
-    position: 1,
-    company: {
-      name: "Microsoft",
-      logo: "https://logo.clearbit.com/microsoft.com",
-    },
-    createdBy: "admin",
-    createdAt: "2026-01-07",
-  },
-];
-
-
-
+const JobDetails = () => { 
   const { id } = useParams();
-  const job = jobs.find((job) => job._id == id);
+  const [job, setJob] = useState(null);
+  
+   useEffect(()=>{
+    const findJob=async()=>{
+      try {
+         const res= await axios.get(`${JOB_API_ENDPOINT}/${id}`,{
+          withCredentials:true,
+         });
+
+         console.log(res.data);
+         
+         if(res.data.success){
+          setJob(res.data.job);
+         }
+      } catch (error) {
+        console.log(error);
+      }
+     }
+     findJob();
+   },[])
 
   if (!job) {
     return <div className="text-center mt-20">Job not found</div>;
+  }
+
+  let posted =(date)=>{
+    const createdAt= new Date(date);
+    const currentDate= new Date();
+    const diffTime= Math.abs(currentDate - createdAt);
+    const diffDays= Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
   }
 
   return (
@@ -81,6 +61,9 @@ const JobDetails = () => {
               {job.location} • {job.jobType}
             </p>
           </div>
+          <span className="px-3 py-1 rounded-full bg-gray-100">
+          Posted {posted(job.createdAt)==0?"Today": posted(job.createdAt)+" days ago"}
+        </span>
         </div>
 
         {/* Job Info */}

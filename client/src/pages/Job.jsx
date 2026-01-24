@@ -2,94 +2,10 @@ import React, { useState } from "react";
 import Navbar from "@/components/general/Navbar";
 import JobCard from "@/components/jobPage/JobCard";
 import Footer from "@/components/general/Footer";
+import { useSelector } from "react-redux";
 
 const Jobs = () => {
-const dummyJobs = [
-  {
-    id: 1,
-    title: "Frontend Developer",
-    company: "Google",
-    logo: "https://www.freepik.com/free-vector/logo-with-curly-arrow_836212.htm#fromView=keyword&page=1&position=1&uuid=08d7e3a3-faab-4d34-85f0-2864571b84a4&query=Company+logo",
-    image: "https://source.unsplash.com/800x600/?office,technology",
-    location: "Remote",
-    type: "Full Time",
-    experience: "Fresher",
-    salary: "10–15 LPA",
-    posted: "2 days ago",
-    description:
-      "We are looking for a Frontend Developer skilled in React, Tailwind CSS, and modern UI practices to build scalable web applications.",
-  },
-  {
-    id: 2,
-    title: "Backend Developer",
-    company: "Microsoft",
-    logo: "https://logo.clearbit.com/microsoft.com",
-    image: "https://source.unsplash.com/800x600/?server,backend",
-    location: "Bangalore",
-    type: "Full Time",
-    experience: "1–3 Years",
-    salary: "12–18 LPA",
-    posted: "4 days ago",
-    description:
-      "Join our backend team to work on high-scale Node.js services, REST APIs, and cloud-based solutions.",
-  },
-  {
-    id: 3,
-    title: "Software Engineer Intern",
-    company: "Amazon",
-    logo: "https://logo.clearbit.com/amazon.com",
-    image: "https://source.unsplash.com/800x600/?coding,developer",
-    location: "Hyderabad",
-    type: "Internship",
-    experience: "Fresher",
-    salary: "30K / month",
-    posted: "1 day ago",
-    description:
-      "A 6-month internship opportunity for students passionate about DSA, system design basics, and real-world software engineering.",
-  },
-  {
-    id: 4,
-    title: "Full Stack Developer",
-    company: "Startup Inc.",
-    logo: "https://logo.clearbit.com/stripe.com",
-    image: "https://source.unsplash.com/800x600/?startup,teamwork",
-    location: "Remote",
-    type: "Full Time",
-    experience: "1–3 Years",
-    salary: "8–12 LPA",
-    posted: "5 days ago",
-    description:
-      "Work on MERN stack applications, build APIs, design UI, and collaborate closely with product teams in a fast-paced startup.",
-  },
-  {
-    id: 5,
-    title: "UI/UX Designer",
-    company: "Adobe",
-    logo: "https://logo.clearbit.com/adobe.com",
-    image: "https://source.unsplash.com/800x600/?design,uiux",
-    location: "Noida",
-    type: "Full Time",
-    experience: "3+ Years",
-    salary: "14–20 LPA",
-    posted: "3 days ago",
-    description:
-      "Design intuitive user interfaces and improve user experience across multiple products with a creative design team.",
-  },
-  {
-    id: 6,
-    title: "Data Analyst",
-    company: "Flipkart",
-    logo: "https://logo.clearbit.com/flipkart.com",
-    image: "https://source.unsplash.com/800x600/?data,analytics",
-    location: "Bangalore",
-    type: "Full Time",
-    experience: "Fresher",
-    salary: "6–10 LPA",
-    posted: "6 days ago",
-    description:
-      "Analyze large datasets, build dashboards, and generate actionable insights using SQL, Python, and BI tools.",
-  },
-];
+const dummyJobs = useSelector((state) => state.job.allJobs);
   const [search, setSearch] = useState("");
   const [location, setLocation] = useState("All");
   const [type, setType] = useState("All");
@@ -97,13 +13,15 @@ const dummyJobs = [
 
 
   const filteredJobs = dummyJobs.filter((job) => {
-    return (
-      job.title.toLowerCase().includes(search.toLowerCase()) &&
-      (location === "All" || job.location === location) &&
-      (type === "All" || job.type === type) &&
-      (experience === "All" || job.experience === experience)
-    );
-  });
+  return (
+    job.title.toLowerCase().includes(search.toLowerCase()) &&
+    (location === "All" ||
+      job.location.toLowerCase().includes(location.toLowerCase())) &&
+    (type === "All" ||
+      job.jobType.toLowerCase() === type.toLowerCase())
+  );
+});
+
 
   return (
     <>
@@ -150,9 +68,9 @@ const dummyJobs = [
                 onChange={(e) => setType(e.target.value)}
               >
                 <option>All</option>
-                <option>Full Time</option>
+                <option>Full-Time</option>
                 <option>Internship</option>
-                <option>Part Time</option>
+                <option>Part-Time</option>
               </select>
             </div>
 
@@ -180,7 +98,7 @@ const dummyJobs = [
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {filteredJobs.map((job) => (
-                <JobCard key={job.id} job={job} />
+                <JobCard key={job._id} job={job} />
               ))}
             </div>
           </div>

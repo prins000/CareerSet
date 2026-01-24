@@ -4,13 +4,13 @@ import { MapPin, Briefcase } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const JobCard = ({ job }) => {
-  let id=1;
+  const id = job._id;
   return (
     <div className="border rounded-xl p-5 flex flex-col gap-4 hover:shadow-md transition">
       {/* Company */}
       <div>
         <h3 className="text-lg font-semibold">{job.title}</h3>
-        <p className="text-sm text-gray-500">{job.company}</p>
+        <p className="text-sm text-gray-500">{job.company.name}</p>
       </div>
 
       {/* Meta */}

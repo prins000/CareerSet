@@ -1,58 +1,10 @@
 import React from "react";
 import JobCard from "./JobCard";
+import { useSelector } from "react-redux";
 
 const LatestJobs = () => {
   // Dummy latest jobs data (replace with API later)
-  const latestJobs = [
-    {
-      id: 1,
-      title: "Frontend Developer",
-      company: "Google",
-      location: "Bangalore, India",
-      type: "Full Time",
-      salary: "18 LPA",
-    },
-    {
-      id: 2,
-      title: "Backend Engineer",
-      company: "Amazon",
-      location: "Hyderabad, India",
-      type: "Full Time",
-      salary: "22 LPA",
-    },
-    {
-      id: 3,
-      title: "Full Stack Developer",
-      company: "Microsoft",
-      location: "Remote",
-      type: "Full Time",
-      salary: "25 LPA",
-    },
-    {
-      id: 4,
-      title: "React Developer",
-      company: "Flipkart",
-      location: "Bangalore, India",
-      type: "Internship",
-      salary: "8 LPA",
-    },
-    {
-      id: 5,
-      title: "Software Engineer",
-      company: "Uber",
-      location: "Pune, India",
-      type: "Full Time",
-      salary: "20 LPA",
-    },
-    {
-      id: 6,
-      title: "SDE Intern",
-      company: "Swiggy",
-      location: "Remote",
-      type: "Internship",
-      salary: "6 LPA",
-    },
-  ];
+  const latestJobs = useSelector((state) => state.job.allJobs);
 
   return (
     <section className="mx-4 sm:mx-6 md:mx-10 mt-16">
@@ -69,8 +21,8 @@ const LatestJobs = () => {
 
       {/* Jobs Grid */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {latestJobs.slice(0, 6).map((job) => (
-          <JobCard key={job.id} job={job} />
+        {latestJobs.length==0?(<p>No Job Found</p>) : latestJobs.slice(0, 6).map((job) => (
+          <JobCard key={job._id} job={job} />
         ))}
       </div>
     </section>

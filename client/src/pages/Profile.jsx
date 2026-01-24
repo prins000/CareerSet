@@ -6,29 +6,15 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Mail, Phone, Briefcase } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
 const Profile = () => {
   const [showAppliedJobs, setShowAppliedJobs] = useState(false);
   const[open,setOpen]=useState(false);
 
-  // Dummy user data (matches your schema)
-  const user = {
-    fullname: "Prins Shiyani",
-    email: "prins@gmail.com",
-    mobile: "9876543210",
-    role: "Student",
-    profile: {
-      bio: "Passionate frontend developer skilled in React, Tailwind CSS, and problem solving.",
-      skills: ["React", "JavaScript", "Tailwind CSS", "DSA"],
-      resume:
-        "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-      resumename: "Prins_Resume.pdf",
-      company: null,
-      profilePhoto:
-        "https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png",
-    },
-  };
+   
+  const user = useSelector((state)=>state.auth.user);
 
   const appliedJobs = [
     {
