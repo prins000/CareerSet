@@ -11,7 +11,7 @@ export const register = async (req, res) => {
       return res.status(400).json({
         message: "Something is missing",
         Success: false,
-      }); 
+      });
     }
 
     const existingUser = await User.findOne({ email });
@@ -21,6 +21,14 @@ export const register = async (req, res) => {
         success: false,
       });
     }
+
+    const mobileExists = await User.findOne({ mobile });
+if (mobileExists) {
+  return res.status(400).json({
+    message: "Mobile number already registered",
+    success: false,
+  });
+}
 
     const hashedPass = await bcrypt.hash(password, 10);
 
@@ -33,11 +41,22 @@ export const register = async (req, res) => {
     });
 
     return res.status(201).json({
-      messege: "User registered successfully",
+      message: "User registered successfully",
       success: true,
     });
   } catch (err) {
-    console.log(err);
+      if (err.code === 11000) {
+    const field = Object.keys(err.keyPattern)[0];
+    return res.status(400).json({
+      message: `${field} already exists`,
+      success: false,
+    });
+  }
+
+  return res.status(500).json({
+    message: "Server error",
+    success: false,
+  });
   }
 };
 
@@ -151,8 +170,6 @@ export const updateProfile = async (req, res) => {
         user,
         success:true,
     });
-
-
      
 } catch (err) {
     console.log(err);

@@ -8,7 +8,7 @@ export const applyjob= async(req,res)=>{
          const existingApplication= await Application.findOne({job:jobId,applicant:userId});
          if(existingApplication){
             return res.status(404).json({
-                messege:"You have already applied for this job",
+                message:"You have already applied for this job",
                 success:false,
             })
          }
@@ -16,7 +16,7 @@ export const applyjob= async(req,res)=>{
          let job= await Job.findById(jobId);
          if(!job){
             return res.status(404).json({
-                messege:"Job not found",
+                message:"Job not found",
                 success:false,
             })
          }
@@ -31,7 +31,7 @@ export const applyjob= async(req,res)=>{
          await job.save();
 
          return res.status(200).json({
-            messege:"job Applied Successfully",
+            message:"job Applied Successfully",
             success:true
          })
 
@@ -54,12 +54,12 @@ export const getApplication= async (req,res)=>{
 
         if(!app || app.length===0){
             return res.status(404).json({
-                messege:"No Applications found",
+                message:"No Applications found",
                 success:false,
             })
         }
         return res.status(200).json({
-            messege:"Applications fetched successfully",
+            message:"Applications fetched successfully",
             success:true,
             data:app,
         })  
@@ -79,12 +79,12 @@ export const getApplication= async (req,res)=>{
 
         if(!app || app.length===0){
             return res.status(404).json({
-                messege:"No Applications found",
+                message:"No Applications found",
                 success:false,
             })
         }
         return res.status(200).json({
-            messege:"Applications fetched successfully",
+            message:"Applications fetched successfully",
             success:true,
             data:app,
         })
@@ -101,7 +101,7 @@ export const getApplication= async (req,res)=>{
 
         if (!status) {
             return res.status(400).json({                       
-                messege:"Status is required",
+                message:"Status is required",
                 success:false,
             })
         }
@@ -111,7 +111,7 @@ export const getApplication= async (req,res)=>{
 
         if (!application) {
             return res.status(404).json({
-                messege:"Application not found",
+                message:"Application not found",
                 success:false,
             })
         }
@@ -120,7 +120,7 @@ export const getApplication= async (req,res)=>{
         await application.save();
 
         return res.status(200).json({
-            messege:"Status updated successfully",
+            message:"Status updated successfully",
             success:true,
             data:application,
         });

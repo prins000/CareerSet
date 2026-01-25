@@ -1,16 +1,41 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { LogOut, User2, Menu, X } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from "@/redux/slices/authSlice";
+import axios from "axios";
+import { USER_API_ENDPOINT } from "@/utils/endpoints";
+import { toast } from "sonner";
+import { persistor } from "@/redux/store";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   let loged =useSelector((state)=>state.auth.user); 
   let dispatch= useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = async() => {
+    console.log("Logging out...");
+    try {
+      const res= await axios.get(`${USER_API_ENDPOINT}/logout`,{
+      withCredentials:true,
+      })
+     
+     if(res.data.success){
+      dispatch(setUser(null));
+      setOpen(false);
+      await persistor.purge();
+      toast.success("Logged out successfully");
+      navigate("/");
+     }
+    } catch (error) {
+      console.log(error);
+      toast.error("Error logging out");
+    }
+  }
 
   return (
     <header className="border-b bg-white">
@@ -57,7 +82,7 @@ const Navbar = () => {
                     </Button>
                   </Link>
 
-                  <Button variant="ghost" onclick={()=>dispatch(setUser(false))} className="justify-start gap-2">
+                  <Button variant="ghost" onClick={handleLogout} className="justify-start gap-2">
                     <LogOut size={16} /> Logout
                   </Button>
                 </div>
@@ -98,7 +123,7 @@ const Navbar = () => {
           {!loged && (
             <div className="flex flex-col gap-2">
               <Link to="/login">
-                <Button variant="outline" className="w-full">
+                <Button variant="outline"  className="w-full">
                   Login
                 </Button>
               </Link>

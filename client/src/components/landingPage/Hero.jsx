@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import { Search } from "lucide-react";
+import { useSelector } from "react-redux";
 
 const Hero = () => {
   const [query, setQuery] = useState("");
+  const user = useSelector((state) => state.auth.user);
 
   return (
     <section className="mx-4 sm:mx-6 md:mx-10 mt-12 md:mt-16">
@@ -50,14 +52,14 @@ const Hero = () => {
             </Button>
           </Link>
 
-          <Link to="/register" className="w-full sm:w-auto">
+          {!user&&<Link to="/register" className="w-full sm:w-auto">
             <Button
               variant="outline"
               className="w-full sm:w-auto px-6 py-5 text-sm sm:text-base border-[#6A38C2] text-[#6A38C2] hover:bg-[#6A38C2]/10"
             >
               Get Started
             </Button>
-          </Link>
+          </Link>}
         </div>
 
       </div>

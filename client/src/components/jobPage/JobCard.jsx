@@ -60,12 +60,16 @@ const JobCard = ({ job }) => {
         >
           View Details
         </Link>
-
-        <button
-          className="px-4 py-2 text-sm font-semibold bg-[#6A38C2] text-white rounded-md hover:bg-[#5b2fb3] transition"
+       
+        <Link
+          to={`/jobs/${id}`}
         >
-          Apply Now
-        </button>
+          <button
+            className="px-4 py-2 text-sm font-semibold bg-[#6A38C2] text-white rounded-md hover:bg-[#5b2fb3] transition"
+          >
+            Apply Now
+          </button>
+        </Link>
       </div>
     </div>
   );

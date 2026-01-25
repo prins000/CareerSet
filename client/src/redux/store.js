@@ -1,22 +1,30 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
 import authReducer from "./slices/authSlice";
 import jobReducer from "./slices/jobSlice";
-import persistReducer from "redux-persist/es/persistReducer";
-import storage from "redux-persist/lib/storage";
-import persistStore from "redux-persist/es/persistStore";
+
+/* Persist only part of auth */
+const authPersistConfig = {
+  key: "auth",
+  storage,
+  blacklist: ["loading"], 
+};
 
 const rootReducer = combineReducers({
-    auth:authReducer,
-    job:jobReducer,
-})
+  auth: persistReducer(authPersistConfig, authReducer),
+  job: jobReducer,
+});
 
-const persistConfig= {
-    key:"root",
-    storage,
-    whiteList:["auth","job"],
-}
+/* Root persist */
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["auth", "job"],
+};
 
-const persistedReducer = persistReducer(persistConfig,rootReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,

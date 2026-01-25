@@ -82,7 +82,7 @@ export const filter = async (req, res) => {
 export const jobById=async (req,res)=>{
     try {
         const jobId=req.params.id;
-        const job= await Job.findById(jobId);
+        const job= await Job.findById(jobId).populate("applications");
         if(!job){
             return res.status(404).json({
                 message:"Job not found",
