@@ -1,12 +1,12 @@
-import React from 'react'
-  
+ 
 import {  RouterProvider, createBrowserRouter} from 'react-router-dom'
-import Login from './pages/Login.jsx'
-import Sign from './pages/Sign.jsx'
-import Home from './pages/Home.jsx'
-import Jobs from './pages/Job.jsx'
-import Profile from './pages/Profile.jsx'
-import JobDetailed from './pages/JobDeatiled.jsx'
+import Login from './pages/general/Login.jsx'
+import Sign from './pages/general/Sign.jsx'
+import Home from './pages/general/Home.jsx'
+import Jobs from './pages/Job/Job.jsx'
+import Profile from './pages/general/Profile.jsx'
+import JobDetailed from './pages/Job/JobDeatiled.jsx'
+import CreateCompany from './pages/admin/CreateCompany.jsx'
 
 
 const App = () => {
@@ -34,6 +34,9 @@ const App = () => {
     },{
        path:'/jobs/:id',
       element:<JobDetailed/>,
+    },{
+      path:'company/create',
+      element:<CreateCompany/>
     }
     
    ])

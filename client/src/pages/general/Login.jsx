@@ -6,13 +6,13 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useSelector, useDispatch } from "react-redux";
-import { setLoading,setUser } from "@/redux/slices/authSlice";
+import { setLoading, setUser } from "@/redux/slices/authSlice";
 import { Loader2 } from "lucide-react";
 
 const Login = () => {
   let navigate = useNavigate();
   let auth = useSelector((state) => state.auth.loading);
-  
+
   let dispatch = useDispatch();
 
   let [input, setInput] = useState({
@@ -41,7 +41,7 @@ const Login = () => {
       if (res.data.success) {
         toast.success(res.data.message);
         dispatch(setUser(res.data.existingUser));
-        navigate("/");
+          navigate("/"); 
       }
 
       setInput({
@@ -60,9 +60,11 @@ const Login = () => {
     <div>
       <Navbar />
 
-      
       <div className="flex flex-col justify-start items-center min-h-screen  mt-10">
-        <form  className="w-full flex items-center justify-center sm:w-[90%] md:w-[70%] lg:w-[40%]" onSubmit={handleSubmit}>
+        <form
+          className="w-full flex items-center justify-center sm:w-[90%] md:w-[70%] lg:w-[40%]"
+          onSubmit={handleSubmit}
+        >
           <div
             className="
               flex flex-col

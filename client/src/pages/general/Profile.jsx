@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Mail, Phone, Briefcase } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import MYCompany from "@/components/admin/MYCompany";
 
 
 const Profile = () => {
@@ -15,7 +16,7 @@ const Profile = () => {
 
    
   const user = useSelector((state)=>state.auth.user);
-
+  const role = user.role;
   const appliedJobs = [
     {
       id: 1,
@@ -84,12 +85,15 @@ const Profile = () => {
           </div>
 
           {/* Bio */}
+          {role==="Student" &&
           <div className="mt-6">
             <h3 className="font-semibold text-lg mb-2">Bio</h3>
             <p className="text-gray-600">{user.profile.bio}</p>
           </div>
-
+}
           {/* Skills */}
+          {
+            role==="Student" &&
           <div className="mt-6">
             <h3 className="font-semibold text-lg mb-2">Skills</h3>
             <div className="flex flex-wrap gap-2">
@@ -103,9 +107,11 @@ const Profile = () => {
               ))}
             </div>
           </div>
+          }
 
           {/* Resume */}
-          <div className="mt-6">
+          { role==="Student" &&
+             <div className="mt-6">
             <h3 className="font-semibold text-lg mb-2">Resume</h3>
             {user.profile.resume ? (
               <a
@@ -120,6 +126,7 @@ const Profile = () => {
               <p className="text-gray-500">No resume uploaded</p>
             )}
           </div>
+          }
 
           {/*applied job (only student)*/}
 
@@ -158,7 +165,7 @@ const Profile = () => {
         </div>
       ) : (
         showAppliedJobs &&
-        user.role === "Student" && (
+        role === "Student" && (
           <div className="mt-8 mx-12">
             <h3 className="text-xl font-semibold mb-4">Applied Jobs</h3>
 
@@ -205,6 +212,7 @@ const Profile = () => {
         )
       )}
         <UpdateProfile open={open} setOpen={setOpen} />
+        {role==='Recruiter' && <MYCompany/>}
       <Footer />
     </>
   );

@@ -13,46 +13,54 @@ import { persistor } from "@/redux/store";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  let loged =useSelector((state)=>state.auth.user); 
-  let dispatch= useDispatch();
+  let loged = useSelector((state) => state.auth.user);
+  let dispatch = useDispatch();
   const navigate = useNavigate();
+  const role= loged?.role;
 
-  const handleLogout = async() => {
+  const handleLogout = async () => {
     console.log("Logging out...");
     try {
-      const res= await axios.get(`${USER_API_ENDPOINT}/logout`,{
-      withCredentials:true,
-      })
-     
-     if(res.data.success){
-      dispatch(setUser(null));
-      setOpen(false);
-      await persistor.purge();
-      toast.success("Logged out successfully");
-      navigate("/");
-     }
+      const res = await axios.get(`${USER_API_ENDPOINT}/logout`, {
+        withCredentials: true,
+      });
+
+      if (res.data.success) {
+        dispatch(setUser(null));
+        setOpen(false);
+        await persistor.purge();
+        toast.success("Logged out successfully");
+        navigate("/");
+      }
     } catch (error) {
       console.log(error);
       toast.error("Error logging out");
     }
-  }
+  };
 
   return (
     <header className="border-b bg-white">
       <div className="flex items-center justify-between mx-4 sm:mx-6 md:mx-10 my-3">
-        
         {/* Logo (Linked to Home) */}
-        <Link to="/" className="font-bold text-2xl sm:text-3xl">
+        <Link to={role==="Student"?"/":"/profile"} className="font-bold text-2xl sm:text-3xl">
           Job<span className="text-[#F83002]">Portal</span>
         </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6">
-          <ul className="flex gap-6 text-medium">
-            <li className="cursor-pointer hover:text-[#6A38C2]"><Link to="/">Home</Link></li>
-            <li className="cursor-pointer hover:text-[#6A38C2]"><Link to="/jobs">Jobs</Link></li>
-            <li className="cursor-pointer hover:text-[#6A38C2]"><Link to="/">Brows</Link></li>
-          </ul>
+          {role === "Student" ? (
+            <ul className="flex gap-6 text-medium">
+              <li className="cursor-pointer hover:text-[#6A38C2]">
+                <Link to="/">Home</Link>
+              </li>
+              <li className="cursor-pointer hover:text-[#6A38C2]">
+                <Link to="/jobs">Jobs</Link>
+              </li>
+              <li className="cursor-pointer hover:text-[#6A38C2]">
+                <Link to="/">Brows</Link>
+              </li>
+            </ul>
+          ) : null}
 
           {loged ? (
             <Popover>
@@ -70,8 +78,8 @@ const Navbar = () => {
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
                   <div>
-                    <h4 className="text-sm font-semibold">User Name</h4>
-                    <p className="text-xs text-gray-500">User Bio</p>
+                    <h4 className="text-sm font-semibold">{loged.fullname}</h4>
+                    
                   </div>
                 </div>
 
@@ -82,7 +90,11 @@ const Navbar = () => {
                     </Button>
                   </Link>
 
-                  <Button variant="ghost" onClick={handleLogout} className="justify-start gap-2">
+                  <Button
+                    variant="ghost"
+                    onClick={handleLogout}
+                    className="justify-start gap-2"
+                  >
                     <LogOut size={16} /> Logout
                   </Button>
                 </div>
@@ -103,16 +115,13 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu Button */}
-        <button
-          className="md:hidden"
-          onClick={() => setOpen(!open)}
-        >
+        <button className="md:hidden" onClick={() => setOpen(!open)}>
           {open ? <X /> : <Menu />}
         </button>
       </div>
 
       {/* Mobile Menu */}
-      {open && (
+      {open &&role=== "Student" &&(
         <div className="md:hidden mx-4 sm:mx-6 pb-4 flex flex-col gap-4">
           <ul className="flex flex-col gap-3">
             <li className="hover:text-[#6A38C2]">Home</li>
@@ -123,7 +132,7 @@ const Navbar = () => {
           {!loged && (
             <div className="flex flex-col gap-2">
               <Link to="/login">
-                <Button variant="outline"  className="w-full">
+                <Button variant="outline" className="w-full">
                   Login
                 </Button>
               </Link>

@@ -13,6 +13,9 @@ const companySchema= new mongoose.Schema({
     location:{
         type:String, 
     },
+    industry:{
+        type:String,
+    },
     website:{
         type:String,
     },

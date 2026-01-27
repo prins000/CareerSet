@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+import { useSelector } from "react-redux";
 
 const Footer = () => {
+  const user= useSelector((state)=>state.auth.user);
+  const role=user?.role;
   return (
     <footer className="mt-20 bg-[#0F0F14] text-gray-300">
       <div className="mx-4 sm:mx-6 md:mx-10 py-12">
@@ -12,15 +15,16 @@ const Footer = () => {
           
           {/* Brand */}
           <div className="space-y-3">
-            <Link to="/" className="text-2xl font-bold text-white">
+            <Link to={role==="Student"?"/":"/profile"} className="text-2xl font-bold text-white">
               Job<span className="text-[#F83002]">Portal</span>
             </Link>
             <p className="text-sm text-gray-400">
-              Find your dream job and build your career with top companies.
+              {role==="Student"?"Your gateway to exciting career opportunities.":"Connecting top talent with leading companies worldwide."}
             </p>
           </div>
 
           {/* Quick Links */}
+         { role==="Student" &&
           <div>
             <h4 className="font-semibold text-white mb-3">Quick Links</h4>
             <ul className="space-y-2 text-sm">
@@ -29,6 +33,7 @@ const Footer = () => {
               <li className="hover:text-[#6A38C2] cursor-pointer">Browse</li>
             </ul>
           </div>
+          }
 
           {/* Company */}
           <div>

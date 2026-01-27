@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 
 const EditProfileDialog = ({ open, setOpen }) => {
   const user = useSelector((state) => state.auth.user);
+  const role=user.role;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,8 +29,8 @@ const EditProfileDialog = ({ open, setOpen }) => {
     fullname: user?.fullname || "",
     email: user?.email || "",
     mobile: user?.mobile || "",
-    bio: user?.profile?.bio || "",
-    skills: user?.profile?.skills?.join(", ") || "",
+    bio: role==="Student"?(user?.profile?.bio || ""):("null"),
+    skills: role==="Student"?(user?.profile?.skills?.join(", ") || ""):("null"),
   });
 
   const handleChange = (e) => {
@@ -99,19 +100,21 @@ const EditProfileDialog = ({ open, setOpen }) => {
             onChange={handleChange}
           />
 
+         {role==="Student"&&
           <Textarea
             name="bio"
             placeholder="Short Bio"
             value={formData.bio}
             onChange={handleChange}
-          />
+          />}
 
+          {role==="Student"&&
           <Input
             name="skills"
             placeholder="Skills (comma separated)"
             value={formData.skills}
             onChange={handleChange}
-          />
+          />}
 
           <Button
             onClick={handleSubmit}

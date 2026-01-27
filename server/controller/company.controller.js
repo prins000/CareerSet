@@ -3,18 +3,23 @@ import {Company} from "../models/company.model.js";
 export const createCompany = async(req,res)=>{
     try{
 
-        const {company} = req.body;
+        const {name,location,website,industry,logo,description} = req.body;
         
-        if(!company){
+        if(!name || !location  ){
             return res.status(400).json({message:"Company data is required",success:false});
         }
-            let existingCompany= await Company.findOne({name:company});
+            let existingCompany= await Company.findOne({name});
         if(existingCompany){
            return res.status(409).json({message:"Company already exists",success:false});
         }
 
        existingCompany =  await Company.create({
-            name:company,
+            name:name,
+            location:location,
+            website:website,
+            industry:industry,
+            logo:logo,
+            description:description,
             userId:req.id,
         })
 
@@ -37,8 +42,8 @@ export const getCompany=async(req,res)=>{
         if(!companies || companies.length===0){
             return res.status(404).json({message:"No companies found for this user",success:false});
         }
-
-        return res.status(200).json({message:"Companies fetched successfully",success:true,data:companies});
+            console.log(companies);
+        return res.status(200).json({message:"Companies fetched successfully",success:true,companies});
     
     }catch(err){
        console.log(err);
