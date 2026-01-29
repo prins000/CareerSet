@@ -5,16 +5,16 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+} from "../ui/dialog";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { USER_API_ENDPOINT } from "@/utils/endpoints";
+import { USER_API_ENDPOINT } from "../../utils/endpoints";
 import { toast } from "sonner";
 import { CloudCog, Loader2 } from "lucide-react";
-import { setUser } from "@/redux/slices/authSlice";
+import { setUser } from "../../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const EditProfileDialog = ({ open, setOpen }) => {
@@ -73,7 +73,7 @@ const EditProfileDialog = ({ open, setOpen }) => {
     <Dialog open={open} onOpenChange={setOpen}>
       
 
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="sm:max-w-125">
         <DialogHeader>
           <DialogTitle>Edit Profile</DialogTitle>
         </DialogHeader>

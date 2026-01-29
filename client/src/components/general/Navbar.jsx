@@ -5,11 +5,11 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { LogOut, User2, Menu, X } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
-import { setUser } from "@/redux/slices/authSlice";
+import { setUser } from "../../redux/slices/authSlice";
 import axios from "axios";
-import { USER_API_ENDPOINT } from "@/utils/endpoints";
+import { USER_API_ENDPOINT } from "../../utils/endpoints";
 import { toast } from "sonner";
-import { persistor } from "@/redux/store";
+import { persistor } from "../../redux/store";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -60,7 +60,13 @@ const Navbar = () => {
                 <Link to="/">Brows</Link>
               </li>
             </ul>
-          ) : null}
+          ) :(
+             <ul className="flex gap-6 text-medium">
+              <li className="cursor-pointer hover:text-[#6A38C2]">
+                <Link to="/admin/jobs">Jobs</Link>
+              </li>
+              </ul>
+          )}
 
           {loged ? (
             <Popover>

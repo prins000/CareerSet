@@ -1,22 +1,24 @@
 import React from "react";
-import Navbar from "@/components/general/Navbar";
-import Footer from "@/components/general/Footer";
-import UpdateProfile from "@/components/general/UpdateProfile";
-import { Button } from "@/components/ui/button";
+import Navbar from "../../components/general/Navbar";
+import Footer from "../../components/general/Footer";
+import UpdateProfile from "../../components/general/UpdateProfile";
+import { Button } from "../../components/ui/button";
 import { useState } from "react";
 import { Mail, Phone, Briefcase } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import MYCompany from "@/components/admin/MYCompany";
+import MYCompany from "../../components/admin/MYCompany";
+import useGetCompany from "../../hooks/useGetCompany";
 
 
 const Profile = () => {
   const [showAppliedJobs, setShowAppliedJobs] = useState(false);
   const[open,setOpen]=useState(false);
-
+   
    
   const user = useSelector((state)=>state.auth.user);
   const role = user.role;
+   useGetCompany({role:role});
   const appliedJobs = [
     {
       id: 1,

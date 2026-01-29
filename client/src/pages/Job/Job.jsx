@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Navbar from "@/components/general/Navbar";
-import JobCard from "@/components/jobPage/JobCard";
-import Footer from "@/components/general/Footer";
+import Navbar from "../../components/general/Navbar";
+import JobCard from "../../components/jobPage/JobCard";
+import Footer from "../../components/general/Footer";
 import { useSelector } from "react-redux";
 
 const Jobs = () => {

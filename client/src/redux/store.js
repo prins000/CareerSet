@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 
 import authReducer from "./slices/authSlice";
 import jobReducer from "./slices/jobSlice";
+import companyReducer from "./slices/companySlice";
 
 /* Persist only part of auth */
 const authPersistConfig = {
@@ -15,13 +16,14 @@ const authPersistConfig = {
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
   job: jobReducer,
+  company: companyReducer,
 });
 
 /* Root persist */
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "job"],
+  whitelist: ["auth"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import {
   Card,
   CardHeader,
   CardContent,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+} from "../ui/card";
+import { Button } from "../ui/button";
 import { Plus, Building2, MapPin, Globe } from "lucide-react";
-import { COMPANY_API_ENDPOINT } from "@/utils/endpoints";
+
+
 
 const AdminCompanies = () => {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  const [companies, setCompanies] = useState([]);
+  
   const [loading, setLoading] = useState(false);
 
   // 🔒 Protect recruiter route
@@ -27,26 +27,7 @@ const AdminCompanies = () => {
   }, [user, navigate]);
 
   // 📦 Fetch logged-in user's companies
-  useEffect(() => {
-    const fetchCompanies = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get(`${COMPANY_API_ENDPOINT}/get`, {
-          withCredentials: true,
-        });
-
-        // ✅ backend sends `companies`
-        setCompanies(res.data?.companies || []);
-      } catch (err) {
-        console.error(err);
-        setCompanies([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCompanies();
-  }, []);
+  const companies = useSelector((state) => state.company.companies);
 
   return (
     <div className="min-h-screen bg-gray-100 px-6 py-8">

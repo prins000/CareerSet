@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Navbar from "@/components/general/Navbar";
+import Navbar from "../../components/general/Navbar";
 import { Link, useNavigate } from "react-router-dom";
-import { USER_API_ENDPOINT } from "@/utils/endpoints.js";
+import { USER_API_ENDPOINT } from "../../utils/endpoints.js";
 import axios from "axios";
 import { toast } from "sonner";
 import { useSelector, useDispatch } from "react-redux";
-import { setLoading } from "@/redux/slices/authSlice";
+import { setLoading } from "../../redux/slices/authSlice";
 import { Loader2 } from "lucide-react";
 
 const Sign = () => {

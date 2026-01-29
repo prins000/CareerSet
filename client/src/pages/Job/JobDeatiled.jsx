@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Navbar from "@/components/general/Navbar";
-import Footer from "@/components/general/Footer";
+import Navbar from "../../components/general/Navbar";
+import Footer from "../../components/general/Footer";
 import axios from "axios";
-import { APPLICATION_API_ENDPOINT, JOB_API_ENDPOINT } from "@/utils/endpoints";
+import { APPLICATION_API_ENDPOINT, JOB_API_ENDPOINT } from "../../utils/endpoints";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
 

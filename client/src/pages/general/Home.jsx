@@ -1,11 +1,12 @@
-import Footer from "@/components/general/Footer";
-import Hero from "@/components/landingPage/Hero";
-import LatestJobs from "@/components/landingPage/LatestJob";
-import Navbar from "@/components/general/Navbar";
+import Footer from "../../components/general/Footer";
+import Hero from "../../components/landingPage/Hero";
+import LatestJobs from "../../components/landingPage/LatestJob";
+import Navbar from "../../components/general/Navbar";
 import React, { useEffect } from "react";
-import useGetJob from "@/hooks/useGetJob";
+import useGetJob from "../../hooks/useGetJob";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 
 const Home = () => {
   useGetJob();

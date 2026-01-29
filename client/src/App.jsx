@@ -7,6 +7,8 @@ import Jobs from './pages/Job/Job.jsx'
 import Profile from './pages/general/Profile.jsx'
 import JobDetailed from './pages/Job/JobDeatiled.jsx'
 import CreateCompany from './pages/admin/CreateCompany.jsx'
+import AdminJobs from './pages/admin/MyJob.jsx'
+import CreateJob from './pages/admin/CreateJob.jsx'
 
 
 const App = () => {
@@ -37,6 +39,14 @@ const App = () => {
     },{
       path:'company/create',
       element:<CreateCompany/>
+    },
+    {
+      path:'admin/jobs',
+      element:<AdminJobs/>
+    },
+    {
+      path:'admin/jobs/create',
+      element:<CreateJob/>
     }
     
    ])

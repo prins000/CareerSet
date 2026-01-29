@@ -3,7 +3,9 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Plus, Briefcase } from "lucide-react";
-import { COMPANY_API_ENDPOINT, JOB_API_ENDPOINT } from "@/utils/endpoints";
+import {  JOB_API_ENDPOINT } from "../../utils/endpoints";
+import Navbar from "../../components/general/Navbar";
+import Footer from "../../components/general/Footer";
 
 const AdminJobs = () => {
   const { user } = useSelector((state) => state.auth);
@@ -41,6 +43,9 @@ const AdminJobs = () => {
   }, []);
 
   return (
+
+    <div>
+      <Navbar/>
     <div className="min-h-screen bg-gray-50 p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
@@ -50,7 +55,7 @@ const AdminJobs = () => {
         </h1>
 
         <button
-          onClick={() => navigate("/admin/job/create")}
+          onClick={() => navigate("/admin/jobs/create")}
           className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-lg hover:opacity-90"
         >
           <Plus className="w-4 h-4" />
@@ -67,7 +72,7 @@ const AdminJobs = () => {
             You haven’t created any jobs yet.
           </p>
           <button
-            onClick={() => navigate("/admin/job/create")}
+            onClick={() => navigate("/admin/jobs/create")}
             className="bg-black text-white px-4 py-2 rounded-lg"
           >
             Create your first job
@@ -108,6 +113,8 @@ const AdminJobs = () => {
           ))}
         </div>
       )}
+    </div>
+    <Footer/>
     </div>
   );
 };

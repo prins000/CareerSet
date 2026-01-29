@@ -1,12 +1,12 @@
 import React from "react";
-import Navbar from "@/components/general/Navbar";
+import Navbar from "../../components/general/Navbar";
 import { useState } from "react";
-import { USER_API_ENDPOINT } from "@/utils/endpoints.js";
+import { USER_API_ENDPOINT } from "../../utils/endpoints.js";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useSelector, useDispatch } from "react-redux";
-import { setLoading, setUser } from "@/redux/slices/authSlice";
+import { setLoading, setUser } from "../../redux/slices/authSlice";
 import { Loader2 } from "lucide-react";
 
 const Login = () => {
@@ -88,7 +88,7 @@ const Login = () => {
                   Email
                 </label>
                 <input
-                  className="border-1 border-black rounded-sm p-1 text-sm h-8"
+                  className="border border-black rounded-sm p-1 text-sm h-8"
                   type="text"
                   name="email"
                   value={input.email}
@@ -103,7 +103,7 @@ const Login = () => {
                   Password
                 </label>
                 <input
-                  className="border-1 border-black rounded-sm p-1 text-sm h-8"
+                  className="border border-black rounded-sm p-1 text-sm h-8"
                   type="password"
                   name="password"
                   placeholder="Password"

@@ -1,13 +1,13 @@
-import { JOB_API_ENDPOINT } from '@/utils/endpoints'
+import { JOB_API_ENDPOINT } from '../utils/endpoints'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
-import { setAllJobs } from '@/redux/slices/jobSlice'
+import { setAllJobs } from '../redux/slices/jobSlice'
 import { useEffect } from 'react'
 
 
 const useGetJob = () => {
     const disPatch=useDispatch();
-
+   
     useEffect(()=>{
         const fetchJobs=async()=>{
             try {
@@ -26,7 +26,7 @@ const useGetJob = () => {
         }
 
         fetchJobs();
-    },[])
+    },[disPatch])
 }
 
 export default useGetJob

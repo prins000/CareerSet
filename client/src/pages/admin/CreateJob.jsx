@@ -11,31 +11,34 @@ import {
   CardDescription,
 } from "../../components/ui/card";
 import {
-  Building2,
-  Globe,
+  Briefcase,
   MapPin,
-  Image,
+  IndianRupee,
+  Users,
   Factory,
+  ListChecks,
   Loader2,
 } from "lucide-react";
-import { COMPANY_API_ENDPOINT } from "../../utils/endpoints";
+import { JOB_API_ENDPOINT } from "../../utils/endpoints";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import BackButton from "../../components/general/BackButton";
 import Navbar from "../../components/general/Navbar";
 import Footer from "../../components/general/Footer";
 
-export default function CreateCompany() {
-  let [loading, setLoading] = useState(false);
-  let navigate = useNavigate();
+export default function CreateJob() {
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    name: "",
+    title: "",
     description: "",
+    requirements: "",
+    salary: "",
     location: "",
-    industry: "",
-    website: "",
-    logo: "",
+    jobType: "",
+    position: "",
+    company: "",
   });
 
   const handleChange = (e) => {
@@ -48,29 +51,23 @@ export default function CreateCompany() {
       setLoading(true);
 
       const res = await axios.post(
-        `${COMPANY_API_ENDPOINT}/register`,
-        formData,
+        `${JOB_API_ENDPOINT}/post`,
+        {
+          ...formData,
+          requirements: formData.requirements.split(","),
+        },
         {
           headers: {
             "Content-Type": "application/json",
           },
           withCredentials: true,
-        },
+        }
       );
 
       if (res.data.success) {
         toast.success(res.data.message);
-        navigate("/profile"); // or /companies
+        navigate("/admin/jobs");
       }
-
-      setFormData({
-        name: "",
-        description: "",
-        location: "",
-        industry: "",
-        website: "",
-        logo: "",
-      });
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong");
     } finally {
@@ -81,27 +78,25 @@ export default function CreateCompany() {
   return (
     <div>
       <Navbar />
-      <div className=" h-auto md:min-h-screen flex py-12 md:py-0 md:items-center justify-center bg-gray-50 px-4">
+
+      <div className="h-auto md:min-h-screen flex py-12 md:py-0 md:items-center justify-center bg-gray-50 px-4">
         <Card className="w-full max-w-xl shadow-md">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl">Create Company</CardTitle>
+            <CardTitle className="text-2xl">Create Job</CardTitle>
             <CardDescription>
-              Add your company details to start posting jobs
+              Post a new job opening for your company
             </CardDescription>
           </CardHeader>
 
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-5">
-              {/* Company Name */}
 
+              {/* Job Title */}
               <div className="relative">
-                <Building2
-                  className="absolute left-3 top-3 text-gray-400"
-                  size={18}
-                />
+                <Briefcase className="absolute left-3 top-3 text-gray-400" size={18} />
                 <Input
-                  name="name"
-                  placeholder="Company Name *"
+                  name="title"
+                  placeholder="Job Title *"
                   required
                   onChange={handleChange}
                   className="pl-10 focus-visible:ring-[#6A38C2]"
@@ -111,69 +106,88 @@ export default function CreateCompany() {
               {/* Description */}
               <Textarea
                 name="description"
-                placeholder="Company Description"
+                placeholder="Job Description *"
                 rows={3}
+                required
                 onChange={handleChange}
                 className="focus-visible:ring-[#6A38C2]"
               />
-              {/* Location */}
+
+              {/* Requirements */}
               <div className="relative">
-                <MapPin
-                  className="absolute left-3 top-3 text-gray-400"
-                  size={18}
-                />
+                <ListChecks className="absolute left-3 top-3 text-gray-400" size={18} />
                 <Input
-                  name="location"
-                  placeholder="Location *"
+                  name="requirements"
+                  placeholder="Requirements (comma separated)"
+                  onChange={handleChange}
+                  className="pl-10 focus-visible:ring-[#6A38C2]"
+                />
+              </div>
+
+              {/* Salary */}
+              <div className="relative">
+                <IndianRupee className="absolute left-3 top-3 text-gray-400" size={18} />
+                <Input
+                  name="salary"
+                  placeholder="Salary (e.g. 8 LPA - 12 LPA)"
                   required
                   onChange={handleChange}
                   className="pl-10 focus-visible:ring-[#6A38C2]"
                 />
               </div>
 
-              {/* Industry */}
+              {/* Location */}
+              <div className="relative">
+                <MapPin className="absolute left-3 top-3 text-gray-400" size={18} />
+                <Input
+                  name="location"
+                  placeholder="Job Location *"
+                  required
+                  onChange={handleChange}
+                  className="pl-10 focus-visible:ring-[#6A38C2]"
+                />
+              </div>
 
-              <div className="relative">
-                <Factory
-                  className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400"
-                  size={18}
-                />
+              {/* Job Type */}
+              <select
+                name="jobType"
+                required
+                onChange={handleChange}
+                placeholder="Select Job Type *"
+                className="w-full border rounded-md p-2 focus-visible:ring-[#6A38C2]"
+              >
+               
+                <option value="Full-time">Full-time</option>
+                <option value="Part-time">Part-time</option>
+                <option value="Internship">Internship</option>
+                
+              </select>
 
-                <Input
-                  name="industry"
-                  placeholder="Industry (e.g. Technology)"
-                  onChange={handleChange}
-                  className="pl-10 focus-visible:ring-[#6A38C2]"
-                />
-              </div>
-              {/* Website */}
+              {/* Open Positions */}
               <div className="relative">
-                <Globe
-                  className="absolute left-3 top-3 text-gray-400"
-                  size={18}
-                />
+                <Users className="absolute left-3 top-3 text-gray-400" size={18} />
                 <Input
-                  type="url"
-                  name="website"
-                  placeholder="Website URL"
+                  type="number"
+                  name="position"
+                  placeholder="Number of Open Positions"
+                  required
                   onChange={handleChange}
                   className="pl-10 focus-visible:ring-[#6A38C2]"
                 />
               </div>
-              {/* Logo */}
+
+              {/* Company ID */}
               <div className="relative">
-                <Image
-                  className="absolute left-3 top-3 text-gray-400"
-                  size={18}
-                />
+                <Factory className="absolute left-3 top-3 text-gray-400" size={18} />
                 <Input
-                  type="url"
-                  name="logo"
-                  placeholder="Logo URL (optional)"
+                  name="company"
+                  placeholder="Company*  (If you don't have , create one first)"
+                  required
                   onChange={handleChange}
                   className="pl-10 focus-visible:ring-[#6A38C2]"
                 />
               </div>
+
               {/* Submit */}
               <div className="flex justify-center items-center flex-col">
                 {loading ? (
@@ -182,23 +196,25 @@ export default function CreateCompany() {
                     disabled
                     className="border-2 w-full p-2 text-white rounded-md bg-[#6A38C2] flex items-center justify-center gap-2"
                   >
-                    <Loader2 className="animate-spin text-white h-4 w-4" />
+                    <Loader2 className="animate-spin h-4 w-4" />
                     <span>Please wait</span>
                   </Button>
                 ) : (
                   <input
                     type="submit"
+                    value="Create Job"
                     className="border-2 w-full text-white p-2 rounded-md bg-[#6A38C2] cursor-pointer hover:bg-[#5a2fa8]"
-                    value="Create Company"
                   />
                 )}
               </div>
+
               <BackButton />
             </form>
           </CardContent>
         </Card>
       </div>
-      <Footer/>
+
+      <Footer />
     </div>
   );
 }
