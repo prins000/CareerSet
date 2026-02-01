@@ -42,13 +42,13 @@ const Navbar = () => {
     <header className="border-b bg-white">
       <div className="flex items-center justify-between mx-4 sm:mx-6 md:mx-10 my-3">
         {/* Logo (Linked to Home) */}
-        <Link to={role==="Student"?"/":"/profile"} className="font-bold text-2xl sm:text-3xl">
+        <Link to={role!=="Recruiter"?"/":"/profile"} className="font-bold text-2xl sm:text-3xl">
           Job<span className="text-[#F83002]">Portal</span>
         </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6">
-          {role === "Student" ? (
+          {role !== "Recruiter" ? (
             <ul className="flex gap-6 text-medium">
               <li className="cursor-pointer hover:text-[#6A38C2]">
                 <Link to="/">Home</Link>

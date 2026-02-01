@@ -17,7 +17,7 @@ const Profile = () => {
    
    
   const user = useSelector((state)=>state.auth.user);
-  const role = user.role;
+  const role = user?.role;
    useGetCompany({role:role});
   const appliedJobs = [
     {

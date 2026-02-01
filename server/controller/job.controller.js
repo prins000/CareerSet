@@ -23,7 +23,7 @@ export const postJob = async (req, res) => {
      let job= await Job.create({
       title,
       description,
-      requirements:requirements.split(","),
+      requirements: Array.isArray(requirements) ? requirements : requirements.split(","),
       salary,
       location,
       jobType,
@@ -126,4 +126,44 @@ export const getJob= async (req,res)=>{
     catch(err){
         console.log(err);
     }
+
 }
+
+export const updateJob= async (req,res)=>{
+    try {
+        const jobId=req.params.id;
+        const {title, description, requirements, salary, location, jobType, position, company} = req.body;
+        if(!title || !description || !requirements || !salary || !location || !jobType || !position || !company){
+            return res.status(400).json({
+                message:"All fields are required",
+                success:false,
+            })
+        }
+        const updatedJob = await Job.findByIdAndUpdate(jobId, {
+            title,
+            description,
+            requirements: Array.isArray(requirements) ? requirements : requirements.split(","),
+            salary,
+            location,
+            jobType,
+            position,
+            company
+        }, { new: true });
+
+        if (!updatedJob) {
+            return res.status(404).json({
+                message: "Job not found",
+                success: false
+            });
+        }
+
+        return res.status(200).json({
+            message: "Job updated successfully",
+            success: true,
+            updatedJob
+        });
+    }
+    catch (err) {
+        console.log(err);
+    }   
+  }

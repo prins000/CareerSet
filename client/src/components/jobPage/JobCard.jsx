@@ -34,11 +34,9 @@ const JobCard = ({ job }) => {
       {/* Job Meta */}
       <div className="flex flex-wrap gap-2 text-xs">
         <span className="px-3 py-1 rounded-full bg-gray-100">
-          {job.type}
+          {job.jobType}
         </span>
-        <span className="px-3 py-1 rounded-full bg-gray-100">
-          {job.experience}
-        </span>
+        
         <span className="px-3 py-1 rounded-full bg-gray-100">
           ₹ {job.salary || "Not Disclosed"}
         </span>
@@ -61,15 +59,8 @@ const JobCard = ({ job }) => {
           View Details
         </Link>
        
-        <Link
-          to={`/jobs/${id}`}
-        >
-          <button
-            className="px-4 py-2 text-sm font-semibold bg-[#6A38C2] text-white rounded-md hover:bg-[#5b2fb3] transition"
-          >
-            Apply Now
-          </button>
-        </Link>
+       
+  
       </div>
     </div>
   );

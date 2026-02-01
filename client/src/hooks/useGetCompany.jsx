@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCompanies } from "../redux/slices/companySlice";
 import { useEffect } from "react";
 
-const useGetCompany = ({role}) => {
+const useGetCompany = () => {
   const dispatch = useDispatch();
    const user=useSelector((state)=>state.auth.user);
   useEffect(() => {
-    if (role !== "Recruiter") return;
+    if (user?.role !== "Recruiter") return;
     const fetchCompanies = async () => {
       try {
         const res = await axios.get(`${COMPANY_API_ENDPOINT}/get`, {

@@ -10,9 +10,9 @@ import Footer from "../../components/general/Footer";
 const AdminJobs = () => {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(false);
+
 
   // 🔒 Protect route
   useEffect(() => {
@@ -88,7 +88,7 @@ const AdminJobs = () => {
               <div>
                 <h2 className="text-lg font-semibold">{job.title}</h2>
                 <p className="text-sm text-gray-500">
-                  {job.location} • {job.jobType}
+                  {job.company?.name } • {job.location}
                 </p>
                 <p className="text-sm text-gray-500">
                   Applicants: {job.applications?.length || 0}
@@ -98,16 +98,11 @@ const AdminJobs = () => {
               <div className="flex gap-3">
                 <button
                   onClick={() => navigate(`/admin/job/${job._id}`)}
-                  className="px-3 py-1 text-sm border rounded-lg hover:bg-gray-100"
+                  className="px-3 text-purple-700 py-1 text-sm border rounded-lg hover:bg-gray-100"
                 >
                   View
                 </button>
-                <button
-                  onClick={() => navigate(`/admin/job/edit/${job._id}`)}
-                  className="px-3 py-1 text-sm border rounded-lg hover:bg-gray-100"
-                >
-                  Edit
-                </button>
+              
               </div>
             </div>
           ))}
