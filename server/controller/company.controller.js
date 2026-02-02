@@ -63,7 +63,7 @@ export const getCompanyById=async(req,res)=>{
             return res.status(404).json({message:"Company not found",success:false});
         }
 
-        return res.status(200).json({message:"Company fetched successfully",success:true,data:company});
+        return res.status(200).json({message:"Company fetched successfully",success:true,company});
     
     }catch(err){
        console.log(err);
@@ -75,12 +75,15 @@ export const updateCompany= async (req,res)=>{
 
     try{
         const companyId= req.params.id;
-        const {name,description,location,website}=req.body;
+        const {name,description,industry,logo,location,website}=req.body;
          const file=req.file;
- 
+           if(!name || !location || !website || !description || !industry  ){
+
+            return res.status(400).json({message:"All fields are required",success:false});
+           }     
          //cloudnarry ayega
   
-         const updatedData={name,description,location,website};
+         const updatedData={name,description,industry,logo,location,website};
 
          let company= await Company.findByIdAndUpdate(companyId,updatedData,{new:true});
          if(!company){

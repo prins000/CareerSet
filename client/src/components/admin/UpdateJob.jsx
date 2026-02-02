@@ -22,7 +22,7 @@ const EditJobDialog = ({ open, setOpen, job }) => {
     salary: job?.salary || "",
     location: job?.location || "",
     jobType: job?.jobType || "",
-    positions: job?.position || "",
+    positions: job?.positions || "",
     company: job?.company || "",
   });
 
@@ -64,7 +64,7 @@ const EditJobDialog = ({ open, setOpen, job }) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-[520px] max-h-[85vh] overflow-hidden">
+      <DialogContent className="sm:max-w-[520px] max-h-[90vh] overflow-hidden">
         <DialogHeader>
           <DialogTitle>Edit Job</DialogTitle>
         </DialogHeader>
@@ -143,7 +143,7 @@ const EditJobDialog = ({ open, setOpen, job }) => {
         <Button
           onClick={handleSubmit}
           disabled={loading}
-          className="w-full bg-[#6A38C2] hover:opacity-90 mt-4"
+          className="w-full bg-[#6A38C2] hover:opacity-90 mt-4 mb-4"
         >
           {loading ? (
             <>

@@ -10,7 +10,7 @@ import AdminJobs from "./pages/admin/MyJob.jsx";
 import CreateJob from "./pages/admin/CreateJob.jsx";
 import useGetCompany from "./hooks/useGetCompany.jsx";
 import useGetJob from "./hooks/useGetJob.jsx";
-import { useSelector } from "react-redux";
+import UpdateCompany from "./pages/admin/UpdateCompany.jsx";
 import JobDetail from "./pages/admin/JobDetailed.jsx";
 
 const App = () => {
@@ -57,6 +57,10 @@ const App = () => {
     {
       path: "/admin/job/:id",
       element: <JobDetail />,
+    },
+    {
+      path: "/admin/company/:id/edit",
+      element: <UpdateCompany />,
     },
   ]);
 

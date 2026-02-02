@@ -24,7 +24,7 @@ const JobDetail = () => {
     const fetchJob = async () => {
       try {
         const res = await axios.get(`${JOB_API_ENDPOINT}/${id}`, {
-          withCredentials: true,
+         
         });
 
         if (res.data.success) {
@@ -80,7 +80,7 @@ const JobDetail = () => {
               </span>
              
               <span className="rounded-full bg-purple-100 px-4 py-1 text-sm font-medium text-purple-700">
-                {job.position} Positions
+                {job.positions} Positions
               </span>
             </div>
           </div>

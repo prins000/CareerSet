@@ -9,11 +9,11 @@ export const postJob = async (req, res) => {
       salary,
       location,
       jobType,
-      position,
+      positions,
       company,
     } = req.body;
 
-    if(!title || !description || !requirements || !salary || !location || !jobType || !position || !company){
+    if(!title || !description || !requirements || !salary || !location || !jobType || !positions || !company){
         return res.status(400).json({
             message:"All fields are required",
             success:false,
@@ -27,7 +27,7 @@ export const postJob = async (req, res) => {
       salary,
       location,
       jobType,
-      position,
+      positions,
       company,
       createdBy:req.id,
     })
@@ -132,8 +132,8 @@ export const getJob= async (req,res)=>{
 export const updateJob= async (req,res)=>{
     try {
         const jobId=req.params.id;
-        const {title, description, requirements, salary, location, jobType, position, company} = req.body;
-        if(!title || !description || !requirements || !salary || !location || !jobType || !position || !company){
+        const {title, description, requirements, salary, location, jobType, positions, company} = req.body;
+        if(!title || !description || !requirements || !salary || !location || !jobType || !positions || !company){
             return res.status(400).json({
                 message:"All fields are required",
                 success:false,
@@ -146,7 +146,7 @@ export const updateJob= async (req,res)=>{
             salary,
             location,
             jobType,
-            position,
+            positions,
             company
         }, { new: true });
 

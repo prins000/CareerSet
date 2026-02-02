@@ -113,7 +113,7 @@ const JobDetails = () => {
           </p>
           <p>
             <span className="font-semibold">Open Positions:</span>{" "}
-            {job.position}
+            {job.positions}
           </p>
           <p>
             <span className="font-semibold">Total Applications:</span>{" "}

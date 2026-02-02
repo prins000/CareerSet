@@ -5,9 +5,10 @@ import Navbar from "../../components/general/Navbar";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-
+import useGetJob from "../../hooks/useGetJob";
 
 const Home = () => {
+    useGetJob();
 
   const user = useSelector((state) => state.auth.user);
   const role = user?.role;

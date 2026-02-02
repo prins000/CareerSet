@@ -15,7 +15,7 @@ const useGetCompany = () => {
           withCredentials: true,
         });
         if (res.data.success) {
-          console.log(res.data.jobs);
+        
           dispatch(setCompanies(res.data?.companies || []));
         }
       } catch (err) {

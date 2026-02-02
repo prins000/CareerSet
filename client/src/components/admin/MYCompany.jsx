@@ -127,7 +127,7 @@ const AdminCompanies = () => {
 
         {/* Actions */}
         <div className="pt-2">
-          <Link to={`/admin/company/${company._id}`}>
+          <Link to={`/admin/company/${company._id}/edit`}>
             <Button
               variant="ghost"
               className="w-full text-[#6A38C2] bg-[#6A38C2]/10"

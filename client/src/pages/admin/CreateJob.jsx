@@ -38,7 +38,7 @@ export default function CreateJob() {
     salary: "",
     location: "",
     jobType: "",
-    position: "",
+    positions: "",
     company: "",
   });
 
@@ -189,8 +189,8 @@ export default function CreateJob() {
                 />
                 <Input
                   type="number"
-                  name="position"
-                  value={formData.position}
+                  name="positions"
+                  value={formData.positions}
                   placeholder="Number of Open Positions"
                   required
                   onChange={handleChange}

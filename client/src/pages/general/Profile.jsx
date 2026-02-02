@@ -15,10 +15,10 @@ const Profile = () => {
   const [showAppliedJobs, setShowAppliedJobs] = useState(false);
   const[open,setOpen]=useState(false);
    
-   
+   useGetCompany();
   const user = useSelector((state)=>state.auth.user);
   const role = user?.role;
-   useGetCompany({role:role});
+   
   const appliedJobs = [
     {
       id: 1,
