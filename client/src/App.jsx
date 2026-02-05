@@ -14,6 +14,7 @@ import UpdateCompany from "./pages/admin/UpdateCompany.jsx";
 import JobDetail from "./pages/admin/JobDetailed.jsx";
 import Applications from "./pages/admin/Applicants.jsx";
 import MyApplications from "./pages/general/MyApplications.jsx";
+import { ProtectedRoute,RecruiterRoute, AuthRoute } from "./components/protected/RouteProtectors.jsx";
 
 const App = () => {
   useGetCompany();
@@ -26,11 +27,11 @@ const App = () => {
     },
     {
       path: "/login",
-      element: <Login />,
+      element: <AuthRoute><Login /></AuthRoute>,
     },
     {
       path: "/register",
-      element: <Sign />,
+      element: <AuthRoute><Sign /></AuthRoute>,
     },
     {
       path: "/jobs",
@@ -38,7 +39,7 @@ const App = () => {
     },
     {
       path: "/profile",
-      element: <Profile />,
+      element: <ProtectedRoute><Profile /></ProtectedRoute>,
     },
     {
       path: "/jobs/:id",
@@ -46,31 +47,31 @@ const App = () => {
     },
     {
       path: "company/create",
-      element: <CreateCompany />,
+      element: <RecruiterRoute><CreateCompany /></RecruiterRoute>,
     },
     {
       path: "admin/jobs",
-      element: <AdminJobs />,
+      element: <RecruiterRoute><AdminJobs /></RecruiterRoute>,
     },
     {
       path: "admin/jobs/create",
-      element: <CreateJob />,
+      element: <RecruiterRoute><CreateJob /></RecruiterRoute>,
     },
     {
       path: "/admin/job/:id",
-      element: <JobDetail />,
+      element: <RecruiterRoute><JobDetail /></RecruiterRoute>,
     },
     {
       path: "/admin/company/:id/edit",
-      element: <UpdateCompany />,
+      element: <RecruiterRoute><UpdateCompany /></RecruiterRoute>,
     },
     {
       path: "/admin/:jobId/applications",
-      element: <Applications />,
+      element: <RecruiterRoute><Applications /></RecruiterRoute>,
     },
      {
       path: "/applications",
-      element: <MyApplications />,
+      element: <ProtectedRoute><MyApplications /></ProtectedRoute>,
     }
   ]);
 

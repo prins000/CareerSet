@@ -83,7 +83,7 @@ const JobDetails = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <div className="bg-[#6A38C2] border-b">
+      <div className="bg-[#6A38C2]/10 border-b">
         <div className="max-w-6xl mx-auto px-6 py-12 flex flex-col md:flex-row gap-8 items-center">
           <img
             src={job.company.logo}
