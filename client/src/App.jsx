@@ -12,6 +12,8 @@ import useGetCompany from "./hooks/useGetCompany.jsx";
 import useGetJob from "./hooks/useGetJob.jsx";
 import UpdateCompany from "./pages/admin/UpdateCompany.jsx";
 import JobDetail from "./pages/admin/JobDetailed.jsx";
+import Applications from "./pages/admin/Applicants.jsx";
+import MyApplications from "./pages/general/MyApplications.jsx";
 
 const App = () => {
   useGetCompany();
@@ -62,6 +64,14 @@ const App = () => {
       path: "/admin/company/:id/edit",
       element: <UpdateCompany />,
     },
+    {
+      path: "/admin/:jobId/applications",
+      element: <Applications />,
+    },
+     {
+      path: "/applications",
+      element: <MyApplications />,
+    }
   ]);
 
   return <RouterProvider router={router} />;

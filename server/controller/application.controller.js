@@ -52,16 +52,11 @@ export const getApplication= async (req,res)=>{
             }
         })
 
-        if(!app || app.length===0){
-            return res.status(404).json({
-                message:"No Applications found",
-                success:false,
-            })
-        }
+        
         return res.status(200).json({
             message:"Applications fetched successfully",
             success:true,
-            data:app,
+            app:app||[],
         })  
         } catch (error) {
             console.log(error);
@@ -86,7 +81,7 @@ export const getApplication= async (req,res)=>{
         return res.status(200).json({
             message:"Applications fetched successfully",
             success:true,
-            data:app,
+            app,
         })
         } catch (error) {
             console.log(error);
@@ -122,7 +117,6 @@ export const getApplication= async (req,res)=>{
         return res.status(200).json({
             message:"Status updated successfully",
             success:true,
-            data:application,
         });
 
     } catch (error) {

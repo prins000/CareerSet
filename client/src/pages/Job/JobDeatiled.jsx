@@ -3,7 +3,10 @@ import { useParams } from "react-router-dom";
 import Navbar from "../../components/general/Navbar";
 import Footer from "../../components/general/Footer";
 import axios from "axios";
-import { APPLICATION_API_ENDPOINT, JOB_API_ENDPOINT } from "../../utils/endpoints";
+import {
+  APPLICATION_API_ENDPOINT,
+  JOB_API_ENDPOINT,
+} from "../../utils/endpoints";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
 
@@ -32,7 +35,7 @@ const JobDetails = () => {
     };
 
     findJob();
-  }, [id,isApplied]);
+  }, [id, isApplied]);
 
   /* -------- CHECK IF USER HAS APPLIED -------- */
   useEffect(() => {
@@ -50,9 +53,7 @@ const JobDetails = () => {
     try {
       const res = await axios.get(
         `${APPLICATION_API_ENDPOINT}/apply/${id}`,
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
 
       if (res.data.success) {
@@ -74,82 +75,147 @@ const JobDetails = () => {
   };
 
   if (!job) {
-    return <div className="text-center mt-20">Loding....</div>;
+    return <div className="text-center mt-20">Loading...</div>;
   }
 
   return (
     <>
       <Navbar />
 
-      <div className="max-w-5xl mx-auto px-4 py-10">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row gap-6 items-start">
+      {/* Hero Section */}
+      <div className="bg-[#6A38C2] border-b">
+        <div className="max-w-6xl mx-auto px-6 py-12 flex flex-col md:flex-row gap-8 items-center">
           <img
             src={job.company.logo}
             alt={job.company.name}
-            className="w-20 h-20 object-contain"
+            className="w-24 h-24 bg-white p-3 rounded-xl shadow-sm border object-contain"
           />
 
-          <div>
-            <h1 className="text-2xl font-bold">{job.title}</h1>
-            <p className="text-gray-600">{job.company.name}</p>
-            <p className="text-sm text-gray-500 mt-1">
+          <div className="flex-1">
+            <h1 className="text-3xl font-bold text-[#6A38C2]">
+              {job.title}
+            </h1>
+            <p className="text-gray-700 mt-1">{job.company.name}</p>
+            <p className="text-sm text-gray-500 mt-2">
               {job.location} • {job.jobType}
             </p>
           </div>
 
-          <span className="px-3 py-1 rounded-full bg-gray-100">
+          <div className="bg-white border px-4 py-2 rounded-full text-sm text-gray-600 shadow-sm">
             Posted{" "}
             {posted(job.createdAt) === 0
               ? "Today"
               : `${posted(job.createdAt)} days ago`}
-          </span>
+          </div>
         </div>
+      </div>
 
-        {/* Job Info */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <p>
-            <span className="font-semibold">Salary:</span> {job.salary}
-          </p>
-          <p>
-            <span className="font-semibold">Open Positions:</span>{" "}
-            {job.positions}
-          </p>
-          <p>
-            <span className="font-semibold">Total Applications:</span>{" "}
-            {job.applications.length}
-          </p>
-        </div>
+      {/* Page Background */}
+      <div className="bg-gray-50">
+        <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-        {/* Description */}
-        <div className="mt-6">
-          <h2 className="text-lg font-semibold mb-2">Job Description</h2>
-          <p className="text-gray-700">{job.description}</p>
-        </div>
+          {/* Left Section */}
+          <div className="lg:col-span-2 space-y-8">
 
-        {/* Requirements */}
-        <div className="mt-6">
-          <h2 className="text-lg font-semibold mb-2">Requirements</h2>
-          <ul className="list-disc ml-5 text-gray-700">
-            {job.requirements.map((req, index) => (
-              <li key={index}>{req}</li>
-            ))}
-          </ul>
-        </div>
+            {/* Job Overview */}
+            <div className="bg-white rounded-2xl shadow-sm p-6 border">
+              <h2 className="text-xl font-semibold mb-4 text-[#6A38C2]">
+                Job Overview
+              </h2>
 
-        {/* Apply Button */}
-        <div className="mt-8">
-          <button
-            onClick={applyhandeler}
-            disabled={isApplied}
-            className={`${
-              isApplied
-                ? "bg-gray-500 cursor-not-allowed"
-                : "bg-[#6A38C2] hover:opacity-90"
-            } text-white px-6 py-3 rounded-md transition`}
-          >
-            {isApplied ? "Already Applied" : "Apply Now"}
-          </button>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
+                <p>
+                  <span className="font-semibold">Salary:</span> {job.salary}
+                </p>
+                <p>
+                  <span className="font-semibold">Open Positions:</span>{" "}
+                  {job.positions}
+                </p>
+                <p>
+                  <span className="font-semibold">Total Applications:</span>{" "}
+                  {job.applications.length}
+                </p>
+              </div>
+            </div>
+
+            {/* Description */}
+            <div className="bg-white rounded-2xl shadow-sm p-6 border">
+              <h2 className="text-xl font-semibold mb-3 text-[#6A38C2]">
+                Job Description
+              </h2>
+              <p className="text-gray-700 leading-relaxed">
+                {job.description}
+              </p>
+            </div>
+
+            {/* Requirements */}
+            <div className="bg-white rounded-2xl shadow-sm p-6 border">
+              <h2 className="text-xl font-semibold mb-3 text-[#6A38C2]">
+                Requirements
+              </h2>
+              <ul className="list-disc ml-5 space-y-2 text-gray-700">
+                {job.requirements.map((req, index) => (
+                  <li key={index}>{req}</li>
+                ))}
+              </ul>
+            </div>
+
+          </div>
+
+          {/* Right Section */}
+          <div className="space-y-6">
+
+            {/* Application Status */}
+            {user && isApplied && (
+              <div className="bg-white rounded-2xl shadow-sm p-6 border">
+                <h2 className="text-lg font-semibold mb-4 text-[#6A38C2]">
+                  Application Status
+                </h2>
+
+                {(() => {
+                  const myApplication = job.applications.find(
+                    (app) => app.applicant === user?._id
+                  );
+
+                  const status = myApplication?.status || "pending";
+
+                  return (
+                    <span
+                      className={`inline-block px-4 py-2 rounded-full text-sm font-semibold ${
+                        status === "Accepted"
+                          ? "bg-green-100 text-green-700"
+                          : status === "Rejected"
+                          ? "bg-red-100 text-red-700"
+                          : "bg-yellow-100 text-yellow-700"
+                      }`}
+                    >
+                      {status.toUpperCase()}
+                    </span>
+                  );
+                })()}
+              </div>
+            )}
+
+            {/* Apply Card */}
+            <div className="bg-white rounded-2xl shadow-sm p-6 border">
+              <button
+                onClick={applyhandeler}
+                disabled={isApplied}
+                className={`w-full py-3 rounded-xl font-semibold text-white transition ${
+                  isApplied
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-[#6A38C2] hover:opacity-90"
+                }`}
+              >
+                {isApplied ? "Already Applied" : "Apply Now"}
+              </button>
+
+              <p className="text-xs text-gray-500 mt-3 text-center">
+                Once applied, you can track your status here.
+              </p>
+            </div>
+
+          </div>
         </div>
       </div>
 

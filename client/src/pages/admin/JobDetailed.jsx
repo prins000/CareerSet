@@ -10,6 +10,7 @@ import {
   Users,
   IndianRupee,
   CalendarDays,
+  PenIcon,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -18,14 +19,12 @@ const JobDetail = () => {
   const navigate = useNavigate();
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
-  let[open,setOpen]=useState(false);
+  let [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const res = await axios.get(`${JOB_API_ENDPOINT}/${id}`, {
-         
-        });
+        const res = await axios.get(`${JOB_API_ENDPOINT}/${id}`, {});
 
         if (res.data.success) {
           setJob(res.data.job);
@@ -54,13 +53,26 @@ const JobDetail = () => {
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-purple-100 px-6 py-10">
       <div className="mx-auto max-w-6xl space-y-8">
         {/* Back */}
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-purple-800 font-medium hover:underline"
-        >
-          <ArrowLeft size={18} />
-          Back
-        </button>
+
+        <div className="flex justify-between items-center mb-6">
+          <button
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-2 text-purple-800 font-medium hover:underline"
+          >
+            <ArrowLeft size={18} />
+            Back
+          </button>
+
+          <button
+            onClick={() => setOpen(true)}
+            className="flex items-center gap-2 rounded-xl px-3 py-1.5 text-sm font-medium
+             text-purple-700 bg-purple-50 border border-purple-200
+             hover:bg-purple-100 hover:shadow-sm transition"
+          >
+            <PenIcon className="size-4" />
+            Edit
+          </button>
+        </div>
 
         {/* Hero */}
         <div className="rounded-3xl bg-white/80 backdrop-blur p-8 shadow-lg border border-purple-100">
@@ -78,7 +90,7 @@ const JobDetail = () => {
               <span className="rounded-full bg-purple-100 px-4 py-1 text-sm font-medium text-purple-700">
                 {job.jobType}
               </span>
-             
+
               <span className="rounded-full bg-purple-100 px-4 py-1 text-sm font-medium text-purple-700">
                 {job.positions} Positions
               </span>
@@ -107,9 +119,7 @@ const JobDetail = () => {
           <div className="rounded-2xl bg-white p-6 shadow-md border">
             <MapPin className="text-purple-800 mb-2" />
             <p className="text-sm text-gray-500">Location</p>
-            <p className="font-semibold text-gray-900">
-              {job.location}
-            </p>
+            <p className="font-semibold text-gray-900">{job.location}</p>
           </div>
 
           <div className="rounded-2xl bg-white p-6 shadow-md border">
@@ -152,21 +162,22 @@ const JobDetail = () => {
         {/* Actions */}
         <div className="flex flex-wrap gap-4">
           <button
-            onClick={() => setOpen(true)}
-            className="rounded-xl bg-purple-600 px-8 py-3 text-white font-medium hover:bg-purple-700 transition"
-          >
-            Edit Job
-          </button>
-
-          <button
             onClick={() => navigate(-1)}
             className="rounded-xl border px-8 py-3 text-gray-600 hover:bg-gray-100 transition"
           >
             Back
           </button>
+
+          <button
+            onClick={() => navigate(`/admin/${job._id}/applications`)}
+            className="rounded-xl text-purple-600 border px-2 font-medium hover:bg-gray-100 transition"
+          >
+            View Applicants
+          </button>
+
         </div>
       </div>
-         <UpdateJob open={open} setOpen={setOpen} job={job}/>  
+      <UpdateJob open={open} setOpen={setOpen} job={job} />
     </div>
   );
 };

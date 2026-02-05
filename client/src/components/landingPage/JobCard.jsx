@@ -27,8 +27,7 @@ const JobCard = ({ job }) => {
 
       {/* Salary */}
       <p className="text-sm">
-        <span className="font-medium text-[#F83002]">₹{job.salary}</span> per
-        annum
+        <span className="font-medium text-[#F83002]">₹{job.salary}</span> 
       </p>
 
       {/* Actions */}

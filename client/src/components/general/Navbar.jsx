@@ -16,7 +16,7 @@ const Navbar = () => {
   let loged = useSelector((state) => state.auth.user);
   let dispatch = useDispatch();
   const navigate = useNavigate();
-  const role= loged?.role;
+  const role = loged?.role;
 
   const handleLogout = async () => {
     console.log("Logging out...");
@@ -42,7 +42,10 @@ const Navbar = () => {
     <header className="border-b bg-white">
       <div className="flex items-center justify-between mx-4 sm:mx-6 md:mx-10 my-3">
         {/* Logo (Linked to Home) */}
-        <Link to={role!=="Recruiter"?"/":"/profile"} className="font-bold text-2xl sm:text-3xl">
+        <Link
+          to={role !== "Recruiter" ? "/" : "/profile"}
+          className="font-bold text-2xl sm:text-3xl"
+        >
           Job<span className="text-[#F83002]">Portal</span>
         </Link>
 
@@ -56,16 +59,18 @@ const Navbar = () => {
               <li className="cursor-pointer hover:text-[#6A38C2]">
                 <Link to="/jobs">Jobs</Link>
               </li>
-              <li className="cursor-pointer hover:text-[#6A38C2]">
-                <Link to="/">Brows</Link>
-              </li>
+              {role === "Student" && (
+                <li className="cursor-pointer hover:text-[#6A38C2]">
+                  <Link to="/applications">Actions</Link>
+                </li>
+              )}
             </ul>
-          ) :(
-             <ul className="flex gap-6 text-medium">
+          ) : (
+            <ul className="flex gap-6 text-medium">
               <li className="cursor-pointer hover:text-[#6A38C2]">
                 <Link to="/admin/jobs">Jobs</Link>
               </li>
-              </ul>
+            </ul>
           )}
 
           {loged ? (
@@ -85,7 +90,6 @@ const Navbar = () => {
                   </Avatar>
                   <div>
                     <h4 className="text-sm font-semibold">{loged.fullname}</h4>
-                    
                   </div>
                 </div>
 
@@ -127,7 +131,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      {open &&role=== "Student" &&(
+      {open && role === "Student" && (
         <div className="md:hidden mx-4 sm:mx-6 pb-4 flex flex-col gap-4">
           <ul className="flex flex-col gap-3">
             <li className="hover:text-[#6A38C2]">Home</li>
