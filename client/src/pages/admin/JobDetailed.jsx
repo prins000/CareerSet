@@ -55,7 +55,7 @@ const JobDetail = () => {
     <>
       <Navbar />
       
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-purple-100 px-6 py-10">
+      <div className="min-h-screen bg-linear-to-br from-purple-50 via-white to-purple-100 px-6 py-10">
         <div className="mx-auto max-w-6xl space-y-8">
         {/* Back */}
 

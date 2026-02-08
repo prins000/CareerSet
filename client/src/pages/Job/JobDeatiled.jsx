@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import Navbar from "../../components/general/Navbar";
 import Footer from "../../components/general/Footer";
 import axios from "axios";
@@ -15,7 +15,7 @@ const JobDetails = () => {
 
   const [job, setJob] = useState(null);
   const [isApplied, setIsApplied] = useState(false);
-
+  const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
 
   /* ---------------- FETCH JOB ---------------- */
@@ -50,6 +50,10 @@ const JobDetails = () => {
 
   /* ---------------- APPLY HANDLER ---------------- */
   const applyhandeler = async () => {
+    if(user!=="Student"){
+      navigate("/login");
+      return;
+    }
     try {
       const res = await axios.get(
         `${APPLICATION_API_ENDPOINT}/apply/${id}`,
@@ -61,8 +65,8 @@ const JobDetails = () => {
         setIsApplied(true);
       }
     } catch (error) {
-      console.log(error);
-      toast.error("Error in applying job");
+       console.log(error);
+      toast.error();
     }
   };
 

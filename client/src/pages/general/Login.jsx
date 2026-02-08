@@ -42,7 +42,7 @@ const Login = () => {
       if (res.data.success) {
         toast.success(res.data.message);
         dispatch(setUser(res.data.existingUser));
-          navigate("/"); 
+          navigate(-1); 
       }
 
       setInput({
