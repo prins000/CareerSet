@@ -3,8 +3,8 @@ import Navbar from "../../components/general/Navbar";
 import Footer from "../../components/general/Footer";
 import UpdateProfile from "../../components/general/UpdateProfile";
 import { Button } from "../../components/ui/button";
-import { Mail, Phone, Briefcase } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Mail, Phone } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import MYCompany from "../../components/admin/MYCompany";
 import useGetCompany from "../../hooks/useGetCompany";
@@ -16,7 +16,7 @@ const Profile = () => {
   const user = useSelector((state) => state.auth.user);
   const role = user?.role;
 
-  // ✅ GUARD: prevent crash on first render
+  // Prevent crash on first render
   if (!user || !user.profile) {
     return (
       <>
@@ -29,110 +29,122 @@ const Profile = () => {
     );
   }
 
-
   return (
     <>
       <Navbar />
 
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-2xl border p-6">
-          {/* Top Section */}
-          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-            <img
-              src={user?.profile?.profilePhoto || "/default-avatar.png"}
-              alt="Profile"
-              className="w-32 h-32 rounded-full border object-cover"
-            />
+      <div className="bg-gray-50 min-h-screen">
+        <div className="max-w-5xl mx-auto px-4 py-10">
+          <div className="bg-white rounded-2xl border shadow-sm p-6 md:p-8">
 
-            <div className="flex-1 text-center sm:text-left">
-              <h2 className="text-2xl font-bold">{user.fullname}</h2>
-              <p className="text-[#6A38C2] font-semibold">{user.role}</p>
+            {/* Top Section */}
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+              <img
+                src={user?.profile?.profilePhoto || "/default-avatar.png"}
+                alt="Profile"
+                className="w-32 h-32 rounded-full border-2 border-gray-100 object-cover shadow-sm"
+              />
 
-              <div className="flex flex-col sm:flex-row gap-4 mt-3 text-sm text-gray-600">
-                <span className="flex items-center gap-2">
-                  <Mail size={16} /> {user.email}
-                </span>
-                <span className="flex items-center gap-2">
-                  <Phone size={16} /> {user.mobile}
-                </span>
+              <div className="flex-1 text-center sm:text-left">
+                <h2 className="text-2xl font-bold text-gray-800">
+                  {user.fullname}
+                </h2>
+                <p className="text-[#6A38C2] font-semibold mt-1">
+                  {user.role}
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-4 mt-4 text-sm text-gray-600">
+                  <span className="flex items-center gap-2">
+                    <Mail size={16} /> {user.email}
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <Phone size={16} /> {user.mobile}
+                  </span>
+                </div>
               </div>
+
+              <Button
+                variant="outline"
+                className="border-[#6A38C2] text-[#6A38C2] hover:bg-[#6A38C2] hover:text-white transition"
+                onClick={() => setOpen(true)}
+              >
+                Edit Profile
+              </Button>
             </div>
 
-            <Button
-              variant="outline"
-              className="border-[#6A38C2] text-[#6A38C2]"
-              onClick={() => setOpen(true)}
-            >
-              Edit Profile
-            </Button>
-          </div>
+            {/* Bio */}
+            {role === "Student" && (
+              <div className="mt-8">
+                <h3 className="font-semibold text-lg mb-2 text-[#6A38C2]">
+                  Bio
+                </h3>
+                <p className="text-gray-600 leading-relaxed">
+                  {user?.profile?.bio || "No bio added"}
+                </p>
+              </div>
+            )}
 
-          {/* Bio */}
-          {role === "Student" && (
-            <div className="mt-6">
-              <h3 className="font-semibold text-lg mb-2">Bio</h3>
-              <p className="text-gray-600">
-                {user?.profile?.bio || "No bio added"}
-              </p>
-            </div>
-          )}
+            {/* Skills */}
+            {role === "Student" && (
+              <div className="mt-8">
+                <h3 className="font-semibold text-lg mb-3 text-[#6A38C2]">
+                  Skills
+                </h3>
 
-          {/* Skills */}
-          {role === "Student" && (
-            <div className="mt-6">
-              <h3 className="font-semibold text-lg mb-2">Skills</h3>
-              <div className="flex flex-wrap gap-2">
-                {user?.profile?.skills?.length > 0 ? (
-                  user.profile.skills.map((skill, index) => (
-                    <span
-                      key={index}
-                      className="px-3 py-1 text-sm rounded-full bg-gray-100"
-                    >
-                      {skill}
-                    </span>
-                  ))
+                <div className="flex flex-wrap gap-2">
+                  {user?.profile?.skills?.length > 0 ? (
+                    user.profile.skills.map((skill, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1 text-sm rounded-full bg-purple-50 text-[#6A38C2] border border-purple-100"
+                      >
+                        {skill}
+                      </span>
+                    ))
+                  ) : (
+                    <p className="text-gray-500 text-sm">No skills added</p>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Resume */}
+            {role === "Student" && (
+              <div className="mt-8">
+                <h3 className="font-semibold text-lg mb-2 text-[#6A38C2]">
+                  Resume
+                </h3>
+
+                {user?.profile?.resume ? (
+                  <a
+                    href={user.profile.resume}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block text-[#6A38C2] font-medium border-b border-[#6A38C2] hover:opacity-80 transition"
+                  >
+                    {user.profile.resumename}
+                  </a>
                 ) : (
-                  <p className="text-gray-500 text-sm">No skills added</p>
+                  <p className="text-gray-500">No resume uploaded</p>
                 )}
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Resume */}
-          {role === "Student" && (
-            <div className="mt-6">
-              <h3 className="font-semibold text-lg mb-2">Resume</h3>
-              {user?.profile?.resume ? (
-                <a
-                  href={user.profile.resume}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#6A38C2] font-semibold underline"
+            {/* Applied Jobs Button */}
+            {role === "Student" && (
+              <div className="mt-8">
+                <button
+                  onClick={() => navigate("/applications")}
+                  className="border border-[#6A38C2] text-[#6A38C2] px-5 py-2 rounded-lg hover:bg-[#6A38C2] hover:text-white transition font-medium"
                 >
-                  {user.profile.resumename}
-                </a>
-              ) : (
-                <p className="text-gray-500">No resume uploaded</p>
-              )}
-            </div>
-          )}
-
-          {/* Applied Jobs Button */}
-          {role === "Student" && (
-            <div className="mt-6">
-              <button
-                onClick={() => navigate("/applications")}
-                className="border border-[#6A38C2] text-[#6A38C2] px-5 py-2 rounded-md hover:bg-[#6A38C2] hover:text-white transition"
-              >
-                View Applied Jobs
-              </button>
-            </div>
-          )}
-
+                  View Applied Jobs
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
-     
       <UpdateProfile open={open} setOpen={setOpen} />
       {role === "Recruiter" && <MYCompany />}
       <Footer />

@@ -4,36 +4,69 @@ import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
 import { useSelector } from "react-redux";
 
 const Footer = () => {
-  const user= useSelector((state)=>state.auth.user);
-  const role=user?.role;
+  const user = useSelector((state) => state.auth.user);
+  const role = user?.role;
+
   return (
     <footer className="mt-20 bg-[#0F0F14] text-gray-300">
       <div className="mx-4 sm:mx-6 md:mx-10 py-12">
-        
+
         {/* Top Section */}
         <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-4">
-          
+
           {/* Brand */}
           <div className="space-y-3">
-            <Link to={role==="Student"?"/":"/profile"} className="text-2xl font-bold text-white">
-              Job<span className="text-[#F83002]">Portal</span>
+            <Link
+              to={role === "Student" || !role ? "/" : "/profile"}
+              className="text-2xl font-bold text-white"
+            >
+              Job<span className="text-[#6A38C2]">Portal</span>
             </Link>
+
             <p className="text-sm text-gray-400">
-              {role==="Student"?"Your gateway to exciting career opportunities.":"Connecting top talent with leading companies worldwide."}
+              {role === "Recruiter"
+                ? "Connecting top talent with leading companies."
+                : "Your gateway to exciting career opportunities."}
             </p>
           </div>
 
           {/* Quick Links */}
-         { role==="Student" &&
-          <div>
-            <h4 className="font-semibold text-white mb-3">Quick Links</h4>
-            <ul className="space-y-2 text-sm">
-              <li className="hover:text-[#6A38C2] cursor-pointer">Home</li>
-              <li className="hover:text-[#6A38C2] cursor-pointer">Jobs</li>
-              <li className="hover:text-[#6A38C2] cursor-pointer">Browse</li>
-            </ul>
-          </div>
-          }
+          {(role === "Student" || !role) && (
+            <div>
+              <h4 className="font-semibold text-white mb-3">Quick Links</h4>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <Link to="/" className="hover:text-[#6A38C2]">
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/jobs" className="hover:text-[#6A38C2]">
+                    Jobs
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          )}
+
+          {/* Recruiter Links */}
+          {role === "Recruiter" && (
+            <div>
+              <h4 className="font-semibold text-white mb-3">Quick Links</h4>
+              <ul className="space-y-2 text-sm">
+                <li>
+                  <Link to="/admin/jobs" className="hover:text-[#6A38C2]">
+                    Jobs
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/admin/companies" className="hover:text-[#6A38C2]">
+                    Companies
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          )}
 
           {/* Company */}
           <div>
@@ -55,9 +88,10 @@ const Footer = () => {
               <Instagram className="cursor-pointer hover:text-[#6A38C2]" />
             </div>
           </div>
+
         </div>
 
-        {/* Bottom Section */}
+        {/* Bottom */}
         <div className="mt-12 border-t border-white/10 pt-4 text-center text-sm text-gray-400">
           © {new Date().getFullYear()} JobPortal. All rights reserved.
         </div>

@@ -10,6 +10,7 @@ import AdminJobs from "./pages/admin/MyJob.jsx";
 import CreateJob from "./pages/admin/CreateJob.jsx";
 import useGetCompany from "./hooks/useGetCompany.jsx";
 import useGetJob from "./hooks/useGetJob.jsx";
+import { useSessionTimeout } from "./hooks/useSessionTimeout.js";
 import UpdateCompany from "./pages/admin/UpdateCompany.jsx";
 import JobDetail from "./pages/admin/JobDetailed.jsx";
 import Applications from "./pages/admin/Applicants.jsx";
@@ -19,6 +20,7 @@ import { ProtectedRoute,RecruiterRoute, AuthRoute } from "./components/protected
 const App = () => {
   useGetCompany();
   useGetJob();
+  useSessionTimeout();
 
   const router = createBrowserRouter([
     {
