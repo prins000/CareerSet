@@ -50,17 +50,29 @@ const Jobs = () => {
                 <label className="text-sm font-medium text-gray-700">
                   Location
                 </label>
-                <select
+                <input
+                  type="text"
+                  placeholder="Enter location (e.g., Remote, Bangalore, Hyderabad, Noida, or custom location...)"
+                  value={location === "All" ? "" : location}
+                  onChange={(e) => setLocation(e.target.value || "All")}
                   className="w-full border rounded-lg px-3 py-2 text-sm mt-1 focus:outline-none focus:ring-2 focus:ring-[#6A38C2]/30"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                >
-                  <option>All</option>
-                  <option>Remote</option>
-                  <option>Bangalore</option>
-                  <option>Hyderabad</option>
-                  <option>Noida</option>
-                </select>
+                />
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {["All", "Remote", "Bangalore", "Hyderabad", "Noida","Pune"].map((loc) => (
+                    <button
+                      key={loc}
+                      type="button"
+                      onClick={() => setLocation(loc)}
+                      className={`px-3 py-1 text-xs rounded-full transition-colors ${
+                        location === loc
+                          ? "bg-[#6A38C2] text-white"
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      }`}
+                    >
+                      {loc}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* Job Type */}
