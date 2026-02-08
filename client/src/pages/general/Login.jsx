@@ -61,7 +61,7 @@ const Login = () => {
     <div>
       <Navbar />
 
-      <div className="flex flex-col justify-start items-center min-h-screen  mt-10">
+      <div className="flex flex-col justify-start items-center   mt-10">
         <form
           className="w-full flex items-center justify-center sm:w-[90%] md:w-[70%] lg:w-[40%]"
           onSubmit={handleSubmit}

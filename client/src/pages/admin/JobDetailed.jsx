@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { JOB_API_ENDPOINT } from "../../utils/endpoints";
 import UpdateJob from "../../components/admin/UpdateJob.jsx";
+import Navbar from "../../components/general/Navbar";
+import Footer from "../../components/general/Footer";
 import {
   ArrowLeft,
   Loader2,
@@ -50,9 +52,11 @@ const JobDetail = () => {
   if (!job) return null;
 
   return (
-    
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-purple-100 px-6 py-10">
-      <div className="mx-auto max-w-6xl space-y-8">
+    <>
+      <Navbar />
+      
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-purple-100 px-6 py-10">
+        <div className="mx-auto max-w-6xl space-y-8">
         {/* Back */}
 
         <div className="flex justify-between items-center mb-6">
@@ -177,9 +181,11 @@ const JobDetail = () => {
           </button>
 
         </div>
+        </div>
       </div>
       <UpdateJob open={open} setOpen={setOpen} job={job} />
-    </div>
+      <Footer />
+    </>
   );
 };
 

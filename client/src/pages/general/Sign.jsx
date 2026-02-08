@@ -61,7 +61,7 @@ const Sign = () => {
     <>
       <Navbar />
 
-      <div className="flex justify-center items-start min-h-screen px-4 py-10">
+      <div className="flex justify-center items-start  px-4 py-10">
         <form
           onSubmit={handleSubmit}
           className="w-full sm:w-[90%] md:w-[70%] lg:w-[40%]"
