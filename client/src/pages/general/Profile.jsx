@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../components/general/Navbar";
 import Footer from "../../components/general/Footer";
 import UpdateProfile from "../../components/general/UpdateProfile";
@@ -15,6 +15,29 @@ const Profile = () => {
   const [open, setOpen] = useState(false);
   const user = useSelector((state) => state.auth.user);
   const role = user?.role;
+
+  // Handle hash scrolling to companies section
+  useEffect(() => {
+    const scrollToCompanies = () => {
+      if (window.location.hash === "#companies") {
+        const element = document.getElementById("companies");
+        if (element) {
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: "smooth" });
+          }, 100);
+        }
+      }
+    };
+
+    // Check on mount
+    scrollToCompanies();
+
+    // Listen for hash changes
+    window.addEventListener("hashchange", scrollToCompanies);
+    
+    // Cleanup listener
+    return () => window.removeEventListener("hashchange", scrollToCompanies);
+  }, []);
 
   // Prevent crash on first render
   if (!user || !user.profile) {
@@ -33,7 +56,7 @@ const Profile = () => {
     <>
       <Navbar />
 
-      <div className="bg-gray-50 min-h-screen">
+      <div className="bg-gray-50 h-fit">
         <div className="max-w-5xl mx-auto px-4 py-10">
           <div className="bg-white rounded-2xl border shadow-sm p-6 md:p-8">
 
@@ -146,7 +169,7 @@ const Profile = () => {
       </div>
 
       <UpdateProfile open={open} setOpen={setOpen} />
-      {role === "Recruiter" && <MYCompany />}
+      {role === "Recruiter" && <div id="companies"><MYCompany /></div>}
       <Footer />
     </>
   );

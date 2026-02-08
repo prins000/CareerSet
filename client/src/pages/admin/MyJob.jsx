@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -7,18 +7,14 @@ import { JOB_API_ENDPOINT } from "../../utils/endpoints";
 import Navbar from "../../components/general/Navbar";
 import Footer from "../../components/general/Footer";
 import { Button } from "../../components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../../components/ui/dropdown-menu";
 
 const AdminJobs = () => {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const dropdownRef = useRef(null);
 
   // 🔒 Protect route
   useEffect(() => {
@@ -47,6 +43,23 @@ const AdminJobs = () => {
 
     fetchJobs();
   }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpenDropdown(null);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
+  const toggleDropdown = (e, jobId) => {
+    e.stopPropagation();
+    setOpenDropdown(openDropdown === jobId ? null : jobId);
+  };
 
   return (
     <div>
@@ -118,34 +131,41 @@ const AdminJobs = () => {
                   </button>
                 </div>
 
-                <div className="sm:hidden flex">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        className="h-8 w-8 p-0"
-                        onPointerDown={(e) => e.stopPropagation()}
-                      >
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
+                <div className="sm:hidden flex" ref={dropdownRef}>
+                  <div className="relative">
+                    <Button
+                      variant="ghost"
+                      className="h-8 w-8 p-0"
+                      onClick={(e) => toggleDropdown(e, job._id)}
+                    >
+                      <MoreHorizontal className="h-4 w-4" />
+                    </Button>
 
-                    <DropdownMenuContent align="end" sideOffset={6}>
-                      <DropdownMenuItem
-                        onSelect={() =>
-                          navigate(`/admin/job/${job._id}/applicants`)
-                        }
-                      >
-                        Applicants
-                      </DropdownMenuItem>
-
-                      <DropdownMenuItem
-                        onSelect={() => navigate(`/admin/job/${job._id}`)}
-                      >
-                        View
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                    {openDropdown === job._id && (
+                      <div className="absolute right-0 top-10 bg-white border border-gray-200 rounded-lg shadow-lg z-50 min-w-[120px]">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/admin/${job._id}/applications`);
+                            setOpenDropdown(null);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm hover:bg-gray-100 rounded-t-lg"
+                        >
+                          Applicants
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/admin/job/${job._id}`);
+                            setOpenDropdown(null);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm hover:bg-gray-100 rounded-b-lg"
+                        >
+                          View
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}

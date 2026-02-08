@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../../components/general/Navbar";
+import Footer from "../../components/general/Footer";
 import { Link, useNavigate } from "react-router-dom";
 import { USER_API_ENDPOINT } from "../../utils/endpoints.js";
 import axios from "axios";
@@ -175,6 +176,7 @@ const Sign = () => {
           </div>
         </form>
       </div>
+      <Footer />
     </>
   );
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../../components/general/Navbar";
+import Footer from "../../components/general/Footer";
 import { useState } from "react";
 import { USER_API_ENDPOINT } from "../../utils/endpoints.js";
 import axios from "axios";
@@ -167,6 +168,7 @@ const Login = () => {
           </div>
         </form>
       </div>
+      <Footer />
     </div>
   );
 };

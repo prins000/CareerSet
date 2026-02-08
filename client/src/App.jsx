@@ -18,9 +18,10 @@ import MyApplications from "./pages/general/MyApplications.jsx";
 import { ProtectedRoute,RecruiterRoute, AuthRoute } from "./components/protected/RouteProtectors.jsx";
 
 const App = () => {
+   useSessionTimeout();
   useGetCompany();
   useGetJob();
-  useSessionTimeout();
+ 
 
   const router = createBrowserRouter([
     {

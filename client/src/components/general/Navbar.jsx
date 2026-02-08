@@ -70,6 +70,9 @@ const Navbar = () => {
               <li className="cursor-pointer hover:text-[#6A38C2]">
                 <Link to="/admin/jobs">Jobs</Link>
               </li>
+              <li className="cursor-pointer hover:text-[#6A38C2]">
+                <Link to="/profile#companies"> Companies</Link>
+              </li>
             </ul>
           )}
 
@@ -131,25 +134,48 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      {open && role === "Student" && (
-        <div className="md:hidden mx-4 sm:mx-6 pb-4 flex flex-col gap-4">
-          <ul className="flex flex-col gap-3">
-            <li className="hover:text-[#6A38C2]">Home</li>
-            <li className="hover:text-[#6A38C2]">Jobs</li>
-            <li className="hover:text-[#6A38C2]">Browse</li>
-          </ul>
+      {open && (
+        <div className="md:hidden mx-4 sm:mx-6 pb-4 flex flex-col gap-4 relative">
+          {loged ? (
+            <div>
+              {role !== "Recruiter" ? (
+                <ul className="flex flex-col gap-3">
+                  <li className=" cursor-pointer hover:text-[#6A38C2]">
+                    <Link to="/"> Home</Link>
+                  </li>
 
-          {!loged && (
-            <div className="flex flex-col gap-2">
+                  <li className=" cursor-pointer hover:text-[#6A38C2]">
+                    <Link to="/jobs">Jobs</Link>
+                  </li>
+
+                  {role === "Student" && (
+                    <li className=" cursor-pointer hover:text-[#6A38C2]">
+                      <Link to="/applications">Actions</Link>
+                    </li>
+                  )}
+                </ul>
+              ) : (
+                <ul className="flex flex-col gap-3">
+                  <li className="cursor-pointer hover:text-[#6A38C2]">
+                    <Link to="/admin/jobs">Jobs</Link>
+                  </li>
+                  <li className="cursor-pointer hover:text-[#6A38C2]">
+                    <Link to="/profile#companies"> Companies</Link>
+                  </li>
+                </ul>
+              )}
+            </div>
+          ) : (
+            <div className="flex  gap-2 text-sm  justify-end ">
               <Link to="/login">
-                <Button variant="outline" className="w-full">
+                <button variant="outline" className=" rounded-[5px] px-2.5 py-1.5  border ">
                   Login
-                </Button>
+                </button>
               </Link>
               <Link to="/register">
-                <Button className="w-full bg-[#6A38C2] hover:bg-[#5a2fa8]">
+                <button className="text-white rounded-[5px] px-2.5 py-1.5 bg-[#6A38C2] hover:bg-[#5a2fa8]">
                   Sign Up
-                </Button>
+                </button>
               </Link>
             </div>
           )}
