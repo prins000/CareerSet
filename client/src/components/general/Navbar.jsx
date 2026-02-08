@@ -176,7 +176,7 @@ const Navbar = () => {
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <h4 className="font-semibold text-gray-800">{loged.fullname}</h4>
+                    <h4 className="text-base font-semibold text-gray-800">{loged.fullname}</h4>
                     <p className="text-sm text-gray-500">{loged.role}</p>
                   </div>
                 </div>
@@ -186,20 +186,20 @@ const Navbar = () => {
                   {role !== "Recruiter" ? (
                     <ul>
                       <li className="hover:text-[#6A38C2] hover:bg-gray-50 px-3 py-1 rounded-lg transition-all">
-                        <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
+                        <Link to="/" className="flex items-center gap-3 text-sm font-medium" onClick={() => setOpen(false)}>
                           <span className="w-2 h-2 bg-[#6A38C2] rounded-full"></span>
                           Home
                         </Link>
                       </li>
                       <li className="hover:text-[#6A38C2] hover:bg-gray-50 px-3 py-1 rounded-lg transition-all">
-                        <Link to="/jobs" className="flex items-center gap-3" onClick={() => setOpen(false)}>
+                        <Link to="/jobs" className="flex items-center gap-3 text-sm font-medium" onClick={() => setOpen(false)}>
                           <span className="w-2 h-2 bg-[#6A38C2] rounded-full"></span>
                           Jobs
                         </Link>
                       </li>
                       {role === "Student" && (
                         <li className="hover:text-[#6A38C2] hover:bg-gray-50 px-3 py-1 rounded-lg transition-all">
-                          <Link to="/applications" className="flex items-center gap-3" onClick={() => setOpen(false)}>
+                          <Link to="/applications" className="flex items-center gap-3 text-sm font-medium" onClick={() => setOpen(false)}>
                             <span className="w-2 h-2 bg-[#6A38C2] rounded-full"></span>
                             Applications
                           </Link>
@@ -209,13 +209,13 @@ const Navbar = () => {
                   ) : (
                     <ul >
                       <li className="hover:text-[#6A38C2] hover:bg-gray-50 px-3 py-1 rounded-lg transition-all">
-                        <Link to="/admin/jobs" className="flex items-center gap-3" onClick={() => setOpen(false)}>
+                        <Link to="/admin/jobs" className="flex items-center gap-3 text-sm font-medium" onClick={() => setOpen(false)}>
                           <span className="w-2 h-2 bg-[#6A38C2] rounded-full"></span>
                           Jobs
                         </Link>
                       </li>
                       <li className="hover:text-[#6A38C2] hover:bg-gray-50 px-3 py-1 rounded-lg transition-all">
-                        <Link to="/profile#companies" className="flex items-center gap-3" onClick={() => setOpen(false)}>
+                        <Link to="/profile#companies" className="flex items-center gap-3 text-sm font-medium" onClick={() => setOpen(false)}>
                           <span className="w-2 h-2 bg-[#6A38C2] rounded-full"></span>
                           Companies
                         </Link>
@@ -249,13 +249,13 @@ const Navbar = () => {
                 <div className="">
                   <ul >
                     <li className="hover:text-[#6A38C2] hover:bg-gray-50 px-3 py-1 rounded-lg transition-all">
-                      <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
+                      <Link to="/" className="flex items-center gap-3 text-sm font-medium" onClick={() => setOpen(false)}>
                         <span className="w-2 h-2 bg-[#6A38C2] rounded-full"></span>
                         Home
                       </Link>
                     </li>
                     <li className="hover:text-[#6A38C2] hover:bg-gray-50 px-3 py-1 rounded-lg transition-all">
-                      <Link to="/jobs" className="flex items-center gap-3" onClick={() => setOpen(false)}>
+                      <Link to="/jobs" className="flex items-center gap-3 text-sm font-medium" onClick={() => setOpen(false)}>
                         <span className="w-2 h-2 bg-[#6A38C2] rounded-full"></span>
                         Jobs
                       </Link>

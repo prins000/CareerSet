@@ -69,10 +69,10 @@ const Profile = () => {
               />
 
               <div className="flex-1 text-center sm:text-left">
-                <h2 className="text-2xl font-bold text-gray-800">
+                <h2 className="text-3xl font-bold text-gray-800">
                   {user.fullname}
                 </h2>
-                <p className="text-[#6A38C2] font-semibold mt-1">
+                <p className="text-[#6A38C2] font-semibold text-lg mt-1">
                   {user.role}
                 </p>
 
@@ -98,7 +98,7 @@ const Profile = () => {
             {/* Bio */}
             {role === "Student" && (
               <div className="mt-8">
-                <h3 className="font-semibold text-lg mb-2 text-[#6A38C2]">
+                <h3 className="font-semibold text-xl mb-2 text-[#6A38C2]">
                   Bio
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -110,7 +110,7 @@ const Profile = () => {
             {/* Skills */}
             {role === "Student" && (
               <div className="mt-8">
-                <h3 className="font-semibold text-lg mb-3 text-[#6A38C2]">
+                <h3 className="font-semibold text-xl mb-3 text-[#6A38C2]">
                   Skills
                 </h3>
 
@@ -134,7 +134,7 @@ const Profile = () => {
             {/* Resume */}
             {role === "Student" && (
               <div className="mt-8">
-                <h3 className="font-semibold text-lg mb-2 text-[#6A38C2]">
+                <h3 className="font-semibold text-xl mb-2 text-[#6A38C2]">
                   Resume
                 </h3>
 

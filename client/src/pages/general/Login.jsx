@@ -80,43 +80,43 @@ const Login = () => {
               rounded-2xl
             "
           >
-            <h2 className="font-bold text-2xl mb-5">Login</h2>
+            <h2 className="font-bold text-3xl mb-6 text-center">Login</h2>
 
             <div className="flex flex-col gap-5">
               {/* Email */}
               <div className="flex flex-col">
-                <label className="font-bold" htmlFor="email">
+                <label className="font-semibold text-sm text-gray-700" htmlFor="email">
                   Email
                 </label>
                 <input
-                  className="border border-black rounded-sm p-1 text-sm h-8"
-                  type="text"
+                  className="border border-gray-300 rounded-lg p-3 text-base h-12 focus:outline-none focus:ring-2 focus:ring-[#6A38C2]"
+                  type="email"
                   name="email"
                   value={input.email}
                   onChange={handleChange}
-                  placeholder="email"
+                  placeholder="Enter your email"
                 />
               </div>
 
               {/* Password */}
               <div className="flex flex-col">
-                <label className="font-bold" htmlFor="password">
+                <label className="font-semibold text-sm text-gray-700" htmlFor="password">
                   Password
                 </label>
                 <input
-                  className="border border-black rounded-sm p-1 text-sm h-8"
+                  className="border border-gray-300 rounded-lg p-3 text-base h-12 focus:outline-none focus:ring-2 focus:ring-[#6A38C2]"
                   type="password"
                   name="password"
-                  placeholder="Password"
                   value={input.password}
                   onChange={handleChange}
+                  placeholder="Enter your password"
                 />
               </div>
 
               {/* Role */}
-              <div className="flex gap-3 items-center">
-                <div className="flex gap-1">
-                  <label className="font-bold">Student</label>
+              <div className="flex gap-6 items-center">
+                <div className="flex gap-2">
+                  <label className="font-semibold text-sm text-gray-700">Student</label>
                   <input
                     type="radio"
                     name="role"
@@ -126,8 +126,8 @@ const Login = () => {
                   />
                 </div>
 
-                <div className="flex gap-1">
-                  <label className="font-bold">Recruiter</label>
+                <div className="flex gap-2">
+                  <label className="font-semibold text-sm text-gray-700">Recruiter</label>
                   <input
                     type="radio"
                     name="role"

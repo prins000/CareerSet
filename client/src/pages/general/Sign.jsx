@@ -67,64 +67,64 @@ const Sign = () => {
           className="w-full sm:w-[90%] md:w-[70%] lg:w-[40%]"
         >
           <div className="bg-[#f7f6f6] border border-gray-300 rounded-2xl p-6">
-            <h2 className="font-bold text-2xl mb-6 text-center">Sign Up</h2>
+            <h2 className="font-bold text-3xl mb-6 text-center">Sign Up</h2>
 
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-5">
               {/* Full Name */}
               <div className="flex flex-col">
-                <label className="font-semibold text-sm mb-1">Full Name</label>
+                <label className="font-semibold text-sm text-gray-700 mb-2">Full Name</label>
                 <input
-                  className="border border-black rounded-sm p-2 text-sm"
+                  className="border border-gray-300 rounded-lg p-3 text-base h-12 focus:outline-none focus:ring-2 focus:ring-[#6A38C2]"
                   type="text"
                   name="fullname"
                   value={input.fullname}
                   onChange={handleChange}
-                  placeholder="Full Name"
+                  placeholder="Enter your full name"
                 />
               </div>
 
               {/* Email */}
               <div className="flex flex-col">
-                <label className="font-semibold text-sm mb-1">Email</label>
+                <label className="font-semibold text-sm text-gray-700 mb-2">Email</label>
                 <input
-                  className="border border-black rounded-sm p-2 text-sm"
+                  className="border border-gray-300 rounded-lg p-3 text-base h-12 focus:outline-none focus:ring-2 focus:ring-[#6A38C2]"
                   type="email"
                   name="email"
                   value={input.email}
                   onChange={handleChange}
-                  placeholder="Email"
+                  placeholder="Enter your email"
                 />
               </div>
 
               {/* Mobile */}
               <div className="flex flex-col">
-                <label className="font-semibold text-sm mb-1">Mobile</label>
+                <label className="font-semibold text-sm text-gray-700 mb-2">Mobile</label>
                 <input
-                  className="border border-black rounded-sm p-2 text-sm"
-                  type="text"
+                  className="border border-gray-300 rounded-lg p-3 text-base h-12 focus:outline-none focus:ring-2 focus:ring-[#6A38C2]"
+                  type="tel"
                   name="mobile"
                   value={input.mobile}
                   onChange={handleChange}
-                  placeholder="Mobile"
+                  placeholder="Enter your mobile number"
                 />
               </div>
 
               {/* Password */}
               <div className="flex flex-col">
-                <label className="font-semibold text-sm mb-1">Password</label>
+                <label className="font-semibold text-sm text-gray-700 mb-2">Password</label>
                 <input
-                  className="border border-black rounded-sm p-2 text-sm"
+                  className="border border-gray-300 rounded-lg p-3 text-base h-12 focus:outline-none focus:ring-2 focus:ring-[#6A38C2]"
                   type="password"
                   name="password"
                   value={input.password}
                   onChange={handleChange}
-                  placeholder="Password"
+                  placeholder="Create a password"
                 />
               </div>
 
               {/* Role */}
               <div className="flex gap-6">
-                <label className="flex items-center gap-2 text-sm font-semibold">
+                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                   <input
                     type="radio"
                     name="role"
@@ -135,7 +135,7 @@ const Sign = () => {
                   Student
                 </label>
 
-                <label className="flex items-center gap-2 text-sm font-semibold">
+                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
                   <input
                     type="radio"
                     name="role"
