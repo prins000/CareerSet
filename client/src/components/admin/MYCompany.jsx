@@ -75,7 +75,7 @@ const AdminCompanies = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {companies.map((company) => (
-              <Card className="hover:shadow-md transition rounded-xl">
+              <Card key={company._id} className="hover:shadow-md transition rounded-xl">
       <CardHeader className="flex flex-row gap-4 items-center">
         {/* Logo */}
         <img

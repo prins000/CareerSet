@@ -2,6 +2,7 @@ import {User} from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
+import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 export const register = async (req, res) => {
   try {
@@ -145,9 +146,6 @@ export const updateProfile = async (req, res) => {
       });
     }
 
-    // req ni body mathi kadhel skills array e string formate ma ave pachi bhale db ma array apyo  hoy db ma array apyo che pan skills string ma avse mate pahri tene array ma convert karva karna ke store to karavu padse ne
-  
-    
     let user = await User.findById(userId);
 
     if(!user){
@@ -162,6 +160,21 @@ export const updateProfile = async (req, res) => {
     user.mobile=mobile;
     user.profile.bio=bio;
     user.profile.skills=skills;
+
+    // Handle resume upload
+    if (req.files && req.files.resume) {
+      const resumeFile = req.files.resume[0];
+      const resumeResult = await uploadToCloudinary(resumeFile, 'resumes');
+      user.profile.resume = resumeResult.url;
+      user.profile.resumename = resumeFile.originalname;
+    }
+
+    // Handle profile photo upload
+    if (req.files && req.files.profilePhoto) {
+      const photoFile = req.files.profilePhoto[0];
+      const photoResult = await uploadToCloudinary(photoFile, 'profile-photos');
+      user.profile.profilePhoto = photoResult.url;
+    }
 
     await user.save();
 

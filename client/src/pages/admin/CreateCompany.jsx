@@ -17,6 +17,7 @@ import {
   Image,
   Factory,
   Loader2,
+  Upload,
 } from "lucide-react";
 import { COMPANY_API_ENDPOINT } from "../../utils/endpoints";
 import { useNavigate } from "react-router-dom";
@@ -27,6 +28,7 @@ import Footer from "../../components/general/Footer";
 
 export default function CreateCompany() {
   let [loading, setLoading] = useState(false);
+  let [logoFile, setLogoFile] = useState(null);
   let navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -42,17 +44,36 @@ export default function CreateCompany() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setLogoFile(file);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
 
+      const formDataToSend = new FormData();
+      
+      // Add form fields
+      Object.keys(formData).forEach(key => {
+        if (key !== 'logo') {
+          formDataToSend.append(key, formData[key]);
+        }
+      });
+      
+      // Add logo file if it exists
+      if (logoFile) {
+        formDataToSend.append('logo', logoFile);
+      }
+
       const res = await axios.post(
         `${COMPANY_API_ENDPOINT}/register`,
-        formData,
+        formDataToSend,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
           withCredentials: true,
         },
@@ -71,6 +92,7 @@ export default function CreateCompany() {
         website: "",
         logo: "",
       });
+      setLogoFile(null);
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong");
     } finally {
@@ -160,19 +182,27 @@ export default function CreateCompany() {
                   className="pl-10 focus-visible:ring-[#6A38C2]"
                 />
               </div>
-              {/* Logo */}
-              <div className="relative">
-                <Image
-                  className="absolute left-3 top-3 text-gray-400"
-                  size={18}
-                />
-                <Input
-                  type="url"
-                  name="logo"
-                  placeholder="Logo URL (optional)"
-                  onChange={handleChange}
-                  className="pl-10 focus-visible:ring-[#6A38C2]"
-                />
+              {/* Logo Upload */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
+                  <Image size={16} />
+                  Company Logo (optional)
+                </label>
+                <div className="relative">
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="cursor-pointer pl-10 focus-visible:ring-[#6A38C2]"
+                  />
+                  <Image
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={18}
+                  />
+                </div>
+                {logoFile && (
+                  <p className="text-xs text-gray-600">Selected: {logoFile.name}</p>
+                )}
               </div>
               {/* Submit */}
               <div className="flex justify-center items-center flex-col">

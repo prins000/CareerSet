@@ -1,4 +1,5 @@
 import {Company} from "../models/company.model.js";
+import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 export const createCompany = async(req,res)=>{
     try{
@@ -13,12 +14,19 @@ export const createCompany = async(req,res)=>{
            return res.status(409).json({message:"Company already exists",success:false});
         }
 
+        // Handle logo upload
+        let logoUrl = logo;
+        if (req.file) {
+            const logoResult = await uploadToCloudinary(req.file, 'company-logos');
+            logoUrl = logoResult.url;
+        }
+
        existingCompany =  await Company.create({
             name:name,
             location:location,
             website:website,
             industry:industry,
-            logo:logo,
+            logo:logoUrl,
             description:description,
             userId:req.id,
         })
@@ -76,22 +84,26 @@ export const updateCompany= async (req,res)=>{
     try{
         const companyId= req.params.id;
         const {name,description,industry,logo,location,website}=req.body;
-         const file=req.file;
-           if(!name || !location || !website || !description || !industry  ){
-
+        
+        if(!name || !location || !website || !description || !industry  ){
             return res.status(400).json({message:"All fields are required",success:false});
-           }     
-         //cloudnarry ayega
+        }     
+
+        // Handle logo upload
+        let logoUrl = logo;
+        if (req.file) {
+            const logoResult = await uploadToCloudinary(req.file, 'company-logos');
+            logoUrl = logoResult.url;
+        }
   
-         const updatedData={name,description,industry,logo,location,website};
+        const updatedData={name,description,industry,logo:logoUrl,location,website};
 
-         let company= await Company.findByIdAndUpdate(companyId,updatedData,{new:true});
-         if(!company){
-            return res.status(404).json({message:"Company not found",success:false});
+        let company= await Company.findByIdAndUpdate(companyId,updatedData,{new:true});
+        if(!company){
+           return res.status(404).json({message:"Company not found",success:false});
+        }
 
-         }
-
-         return res.status(200).json({message:"Company updated successfully",success:true,data:company});
+        return res.status(200).json({message:"Company updated successfully",success:true,data:company});
 
     }catch(err){
               console.log(err);
