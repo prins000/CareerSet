@@ -161,18 +161,18 @@ export const updateProfile = async (req, res) => {
     user.profile.bio=bio;
     user.profile.skills=skills;
 
-    // Handle resume upload
-    if (req.files && req.files.resume) {
+    // Handle resume upload (store as raw file)
+    if (req.files && req.files.resume && req.files.resume[0]) {
       const resumeFile = req.files.resume[0];
-      const resumeResult = await uploadToCloudinary(resumeFile, 'resumes');
+      const resumeResult = await uploadToCloudinary(resumeFile.path, 'resumes', 'raw');
       user.profile.resume = resumeResult.url;
       user.profile.resumename = resumeFile.originalname;
     }
 
-    // Handle profile photo upload
-    if (req.files && req.files.profilePhoto) {
+    // Handle profile photo upload (image)
+    if (req.files && req.files.profilePhoto && req.files.profilePhoto[0]) {
       const photoFile = req.files.profilePhoto[0];
-      const photoResult = await uploadToCloudinary(photoFile, 'profile-photos');
+      const photoResult = await uploadToCloudinary(photoFile.path, 'profile-photos', 'image');
       user.profile.profilePhoto = photoResult.url;
     }
 
@@ -185,6 +185,11 @@ export const updateProfile = async (req, res) => {
     });
      
 } catch (err) {
-    console.log(err);
-  }
+    console.error('Profile update error:', err);
+    return res.status(500).json({
+        message: "Server error during profile update",
+        success: false,
+        error: err.message
+    });
+}
 };

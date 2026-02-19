@@ -1,5 +1,8 @@
 import {Application } from '../models/application.model.js';
 import { Job } from '../models/job.model.js';
+import { uploadToCloudinary } from '../utils/cloudinary.js';
+import fs from 'fs';
+
 export const applyjob= async(req,res)=>{
     try {
          const jobId= req.params.jobId;
@@ -21,9 +24,31 @@ export const applyjob= async(req,res)=>{
             })
          }
 
+         // Check if resume file is uploaded
+         if (!req.file) {
+            return res.status(400).json({
+                message:"Resume file is required",
+                success:false,
+            })
+         }
+
+        // Upload resume to Cloudinary from local temp storage as raw file
+        const resumeUploadResult = await uploadToCloudinary(req.file.path, "job-portal-resumes", "raw");
+         
+         if (!resumeUploadResult) {
+            return res.status(500).json({
+                message:"Failed to upload resume",
+                success:false,
+            })
+         }
+
          let newApplication= new Application({
             job:jobId,
             applicant:userId,
+            resume: {
+                public_id: resumeUploadResult.public_id,
+                url: resumeUploadResult.url
+            }
          })
          await newApplication.save();
 
@@ -32,11 +57,20 @@ export const applyjob= async(req,res)=>{
 
          return res.status(200).json({
             message:"job Applied Successfully",
-            success:true
+            success:true,
+            application: newApplication
          })
 
     } catch (error) {
        console.log(error);
+       // Clean up temp file if it exists and there was an error
+       if (req.file && req.file.path && fs.existsSync(req.file.path)) {
+           fs.unlinkSync(req.file.path);
+       }
+       return res.status(500).json({
+           message:"Internal server error",
+           success:false,
+       })
     }
 }
 

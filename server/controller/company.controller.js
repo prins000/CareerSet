@@ -14,10 +14,10 @@ export const createCompany = async(req,res)=>{
            return res.status(409).json({message:"Company already exists",success:false});
         }
 
-        // Handle logo upload
+        // Handle logo upload (image)
         let logoUrl = logo;
-        if (req.file) {
-            const logoResult = await uploadToCloudinary(req.file, 'company-logos');
+        if (req.file && req.file.path) {
+            const logoResult = await uploadToCloudinary(req.file.path, 'company-logos', 'image');
             logoUrl = logoResult.url;
         }
 
@@ -50,7 +50,7 @@ export const getCompany=async(req,res)=>{
         if(!companies || companies.length===0){
             return res.status(404).json({message:"No companies found for this user",success:false});
         }
-            console.log(companies);
+            
         return res.status(200).json({message:"Companies fetched successfully",success:true,companies});
     
     }catch(err){
@@ -89,10 +89,10 @@ export const updateCompany= async (req,res)=>{
             return res.status(400).json({message:"All fields are required",success:false});
         }     
 
-        // Handle logo upload
+        // Handle logo upload (image)
         let logoUrl = logo;
-        if (req.file) {
-            const logoResult = await uploadToCloudinary(req.file, 'company-logos');
+        if (req.file && req.file.path) {
+            const logoResult = await uploadToCloudinary(req.file.path, 'company-logos', 'image');
             logoUrl = logoResult.url;
         }
   

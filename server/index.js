@@ -7,6 +7,7 @@ import userRoutes from './routes/user.routes.js'
 import companyRoutes from './routes/company.routes.js';
 import jobRoutes from './routes/jobs.routes.js';
 import applicationRoutes from './routes/application.routes.js';
+import path from 'path';
 
 
 dotenv.config({});
@@ -25,6 +26,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
+
+// Serve static files from public directory
+app.use('/public', express.static(path.join(process.cwd(), 'public')));
 
 
 app.listen(port,()=>{
