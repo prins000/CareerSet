@@ -17,7 +17,7 @@ const app= express();
 const port=process.env.port || 6000;
 
 const corsOptions={
-    origin:process.env.NODE_ENV === 'production' ? true : ['http://localhost:5173'],
+    origin:['http://localhost:5173', 'https://jobportal-y8fb.onrender.com'],
     credentials:true,
 }
 
