@@ -17,7 +17,7 @@ const app= express();
 const port=process.env.port || 6000;
 
 const corsOptions={
-    origin:['http://localhost:5173', 'https://jobportal-y8fb.onrender.com'],
+    origin:['http://localhost:5173', 'https://jobportal-y8fb.onrender.com', 'https://careerset.onrender.com'],
     credentials:true,
 }
 
