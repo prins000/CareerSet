@@ -6,34 +6,61 @@ import Footer from "../../components/general/Footer";
 import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
 import { Mail, Phone, FileText } from "lucide-react";
-import { APPLICATION_API_ENDPOINT } from "../../utils/endpoints";
+import {
+  APPLICATION_API_ENDPOINT,
+  JOB_API_ENDPOINT,
+} from "../../utils/endpoints";
 import { toast } from "sonner";
 
 const AdminApplicants = () => {
   const { jobId } = useParams();
   const [applications, setApplications] = useState([]);
+  const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchApplicants = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get(
-          `${APPLICATION_API_ENDPOINT}/applicants/${jobId}`,
-          { withCredentials: true },
-        );
-        if (res.data.success) {
-          setApplications(res.data.app);
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  if (!jobId) return;
 
-    fetchApplicants();
-  }, [jobId]);
+  const fetchData = async () => {
+    setLoading(true);
+
+    try {
+      const [applicantsRes, jobRes] = await Promise.allSettled([
+        axios.get(`${APPLICATION_API_ENDPOINT}/applicants/${jobId}`, {
+          withCredentials: true,
+        }),
+        axios.get(`${JOB_API_ENDPOINT}/${jobId}`, {
+          withCredentials: true,
+        }),
+      ]);
+
+      // Handle applicants safely
+      if (
+        applicantsRes.status === "fulfilled" &&
+        applicantsRes.value.data.success
+      ) {
+        setApplications(applicantsRes.value.data.app || []);
+      } else {
+        setApplications([]); // ensure empty state
+      }
+
+      // Handle job safely
+      if (
+        jobRes.status === "fulfilled" &&
+        jobRes.value.data.success
+      ) {
+        setJob(jobRes.value.data.job);
+      }
+
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchData();
+}, [jobId]);
 
   const updateStatus = async (applicationId, status) => {
     try {
@@ -60,6 +87,29 @@ const AdminApplicants = () => {
   return (
     <>
       <Navbar />
+
+      {/* Job Summary */}
+      {job && (
+        <div className="bg-linear-to-br from-purple-50 to-blue-50 rounded-xl border border-purple-100 p-4 m-6">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div className="flex-1">
+              <h2 className="text-2xl font-bold text-gray-900 ">{job.title}</h2>
+              <p className="text-gray-600 mb-3">
+                {job.company?.name} • {job.location}
+              </p>
+            </div>
+
+            <div className="flex flex-col items-end gap-2">
+              <div className="text-right">
+                <p className="text-sm text-gray-500">Posted</p>
+                <p className="text-sm font-medium text-gray-700">
+                  {new Date(job.createdAt).toLocaleDateString()}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="max-w-6xl mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold mb-6">Applicants</h1>

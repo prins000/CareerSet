@@ -18,9 +18,9 @@ const JobCard = ({ job }) => {
       {/* Top Section */}
       <div className="flex items-start gap-4">
         <img
-          src={job.logo}
+          src={job.company.logo}
           alt={job.company}
-          className="w-14 h-14 rounded-lg object-contain border bg-white"
+          className="w-14 h-14 rounded-lg object-cover border bg-white"
         />
 
         <div className="flex-1">

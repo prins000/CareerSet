@@ -81,8 +81,10 @@ const Navbar = () => {
               {/* User Profile */}
               <Popover>
                 <PopoverTrigger>
-                  <Avatar className="cursor-pointer ring-2 ring-gray-200 hover:ring-[#6A38C2] transition-all">
-                    <AvatarImage src="https://github.com/shadcn.png" />
+                  <Avatar className="cursor-pointer ring-2 ring-gray-200 hover:ring-[#6A38C2] size-9  transition-all">
+                    <AvatarImage  
+                    className="object-cover w-full h-full"
+                     src={loged.profile?.profilePhoto} />
                     <AvatarFallback className="bg-[#6A38C2] text-white">
                       {loged.fullname?.charAt(0) || "U"}
                     </AvatarFallback>
@@ -92,7 +94,9 @@ const Navbar = () => {
                 <PopoverContent className="w-64 border-gray-200 shadow-lg">
                   <div className="flex gap-3 items-center pb-3 border-b">
                     <Avatar className="size-12 ring-2 ring-gray-100">
-                      <AvatarImage src="https://github.com/shadcn.png" />
+                      <AvatarImage 
+                      className="object-cover w-full h-full"
+                      src={loged.profile?.profilePhoto}  />
                       <AvatarFallback className="bg-[#6A38C2] text-white">
                         {loged.fullname?.charAt(0) || "U"}
                       </AvatarFallback>
@@ -170,7 +174,7 @@ const Navbar = () => {
                 {/* User Profile Section */}
                 <div className="flex items-center gap-4 py-4 border-b bg-gray-50 -mx-4 px-4">
                   <Avatar className="ring-2 size-12 ring-white shadow-sm">
-                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarImage src={loged.profile?.profilePhoto}  />
                     <AvatarFallback className="bg-[#6A38C2] text-white">
                       {loged.fullname?.charAt(0) || "U"}
                     </AvatarFallback>

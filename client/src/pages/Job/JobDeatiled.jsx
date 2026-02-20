@@ -50,8 +50,15 @@ const JobDetails = () => {
 
   /* ---------------- APPLY HANDLER ---------------- */
   const applyhandeler = async () => {
-    if(user!=="Student"){
+    if(!user || user.role !== "Student"){
+      toast.error("Please login first");
       navigate("/login");
+      return;
+    }
+
+    if(!user.profile.resume){
+      toast.error("Please upload your resume first");
+      navigate("/profile");
       return;
     }
     try {
@@ -66,7 +73,7 @@ const JobDetails = () => {
       }
     } catch (error) {
        console.log(error);
-      toast.error();
+      toast.error("Something went wrong");
     }
   };
 
@@ -92,7 +99,7 @@ const JobDetails = () => {
           <img
             src={job.company.logo}
             alt={job.company.name}
-            className="w-24 h-24 bg-white p-3 rounded-xl shadow-sm border object-contain"
+            className="h-24 w-24 bg-white  rounded-xl shadow-sm border object-cover"
           />
 
           <div className="flex-1">

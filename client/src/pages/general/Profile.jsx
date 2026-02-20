@@ -143,7 +143,7 @@ const Profile = () => {
                     href={user.profile.resume}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block text-[#6A38C2] font-medium border-b border-[#6A38C2] hover:opacity-80 transition"
+                    className="inline-block text-black font-medium border-b border-[#6A38C2] hover:opacity-80 transition"
                   >
                     {user.profile.resumename}
                   </a>

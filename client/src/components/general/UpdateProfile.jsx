@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 
 const EditProfileDialog = ({ open, setOpen }) => {
   const user = useSelector((state) => state.auth.user);
-  const role=user.role;
+  const role = user.role;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -31,8 +31,9 @@ const EditProfileDialog = ({ open, setOpen }) => {
     fullname: user?.fullname || "",
     email: user?.email || "",
     mobile: user?.mobile || "",
-    bio: role==="Student"?(user?.profile?.bio || ""):("null"),
-    skills: role==="Student"?(user?.profile?.skills?.join(", ") || ""):("null"),
+    bio: role === "Student" ? user?.profile?.bio || "" : "null",
+    skills:
+      role === "Student" ? user?.profile?.skills?.join(", ") || "" : "null",
   });
 
   const handleChange = (e) => {
@@ -42,48 +43,50 @@ const EditProfileDialog = ({ open, setOpen }) => {
 
   const handleFileChange = (e, type) => {
     const file = e.target.files[0];
-    if (type === 'resume') {
+    if (type === "resume") {
       setResumeFile(file);
-    } else if (type === 'profilePhoto') {
+    } else if (type === "profilePhoto") {
       setProfilePhotoFile(file);
     }
   };
 
   const handleSubmit = async () => {
     setLoading(true);
-    
+
     const formDataToSend = new FormData();
-    
+
     // Add form fields
-    Object.keys(formData).forEach(key => {
-      if (key === 'skills') {
-        formDataToSend.append(key, formData.skills
+    Object.keys(formData).forEach((key) => {
+      if (key === "skills") {
+        const skillsArray = formData.skills
           .split(",")
           .map((s) => s.trim())
-          .filter(Boolean));
+          .filter(Boolean); // optional: removes empty skills
+
+        formDataToSend.append(key, JSON.stringify(skillsArray));
       } else {
         formDataToSend.append(key, formData[key]);
       }
     });
-    
+
     // Add files if they exist
     if (resumeFile) {
-      formDataToSend.append('resume', resumeFile);
+      formDataToSend.append("resume", resumeFile);
     }
     if (profilePhotoFile) {
-      formDataToSend.append('profilePhoto', profilePhotoFile);
+      formDataToSend.append("profilePhoto", profilePhotoFile);
     }
 
     try {
       const res = await axios.post(
         `${USER_API_ENDPOINT}/profile/update`,
         formDataToSend,
-        { 
+        {
           withCredentials: true,
           headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }
+            "Content-Type": "multipart/form-data",
+          },
+        },
       );
 
       if (res.data.success) {
@@ -101,8 +104,6 @@ const EditProfileDialog = ({ open, setOpen }) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      
-
       <DialogContent className="sm:max-w-125">
         <DialogHeader>
           <DialogTitle>Edit Profile</DialogTitle>
@@ -130,21 +131,23 @@ const EditProfileDialog = ({ open, setOpen }) => {
             onChange={handleChange}
           />
 
-         {role==="Student"&&
-          <Textarea
-            name="bio"
-            placeholder="Short Bio"
-            value={formData.bio}
-            onChange={handleChange}
-          />}
+          {role === "Student" && (
+            <Textarea
+              name="bio"
+              placeholder="Short Bio"
+              value={formData.bio}
+              onChange={handleChange}
+            />
+          )}
 
-          {role==="Student"&&
-          <Input
-            name="skills"
-            placeholder="Skills (comma separated)"
-            value={formData.skills}
-            onChange={handleChange}
-          />}
+          {role === "Student" && (
+            <Input
+              name="skills"
+              placeholder="Skills (comma separated)"
+              value={formData.skills}
+              onChange={handleChange}
+            />
+          )}
 
           {/* Resume Upload for Students */}
           {role === "Student" && (
@@ -156,15 +159,25 @@ const EditProfileDialog = ({ open, setOpen }) => {
               <Input
                 type="file"
                 accept=".pdf,.doc,.docx"
-                onChange={(e) => handleFileChange(e, 'resume')}
+                onChange={(e) => handleFileChange(e, "resume")}
                 className="cursor-pointer"
               />
               {resumeFile && (
-                <p className="text-xs text-gray-600">Selected: {resumeFile.name}</p>
+                <p className="text-xs text-gray-600">
+                  Selected: {resumeFile.name}
+                </p>
               )}
               {user?.profile?.resume && (
                 <p className="text-xs text-blue-600">
-                  Current: <a href={user.profile.resume} target="_blank" rel="noopener noreferrer" className="underline">View Resume</a>
+                  Current:{" "}
+                  <a
+                    href={user.profile.resume}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                  >
+                    View Resume
+                  </a>
                 </p>
               )}
             </div>
@@ -179,17 +192,19 @@ const EditProfileDialog = ({ open, setOpen }) => {
             <Input
               type="file"
               accept="image/*"
-              onChange={(e) => handleFileChange(e, 'profilePhoto')}
+              onChange={(e) => handleFileChange(e, "profilePhoto")}
               className="cursor-pointer"
             />
             {profilePhotoFile && (
-              <p className="text-xs text-gray-600">Selected: {profilePhotoFile.name}</p>
+              <p className="text-xs text-gray-600">
+                Selected: {profilePhotoFile.name}
+              </p>
             )}
             {user?.profile?.profilePhoto && (
               <div className="flex items-center gap-2">
-                <img 
-                  src={user.profile.profilePhoto} 
-                  alt="Current profile" 
+                <img
+                  src={user.profile.profilePhoto}
+                  alt="Current profile"
                   className="w-10 h-10 rounded-full object-cover"
                 />
                 <p className="text-xs text-gray-600">Current photo</p>

@@ -19,16 +19,6 @@ const applicationSchema= new mongoose.Schema({
         default:'Pending',
     },
 
-    resume:{
-        public_id:{
-            type:String,
-            required:true,
-        },
-        url:{
-            type:String,
-            required:true,
-        }
-    }
 
 },{timestamps:true});
 

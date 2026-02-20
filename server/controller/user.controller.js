@@ -159,8 +159,26 @@ export const updateProfile = async (req, res) => {
     user.email=email;
     user.mobile=mobile;
     user.profile.bio=bio;
-    user.profile.skills=skills;
-
+    
+    // Parse skills from JSON string if it's a string, otherwise use as-is
+    let parsedSkills;
+    if (typeof skills === 'string') {
+      try {
+        parsedSkills = JSON.parse(skills);
+        // Ensure it's an array of strings
+        if (!Array.isArray(parsedSkills)) {
+          parsedSkills = [parsedSkills];
+        }
+      } catch (e) {
+        // If JSON parsing fails, split by comma as fallback
+        parsedSkills = skills.split(',').map(s => s.trim()).filter(Boolean);
+      }
+    } else {
+      parsedSkills = skills;
+    }
+    
+    user.profile.skills = parsedSkills;
+   
     // Handle resume upload (store as raw file)
     if (req.files && req.files.resume && req.files.resume[0]) {
       const resumeFile = req.files.resume[0];

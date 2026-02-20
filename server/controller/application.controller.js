@@ -1,7 +1,6 @@
 import {Application } from '../models/application.model.js';
 import { Job } from '../models/job.model.js';
-import { uploadToCloudinary } from '../utils/cloudinary.js';
-import fs from 'fs';
+
 
 export const applyjob= async(req,res)=>{
     try {
@@ -24,31 +23,11 @@ export const applyjob= async(req,res)=>{
             })
          }
 
-         // Check if resume file is uploaded
-         if (!req.file) {
-            return res.status(400).json({
-                message:"Resume file is required",
-                success:false,
-            })
-         }
 
-        // Upload resume to Cloudinary from local temp storage as raw file
-        const resumeUploadResult = await uploadToCloudinary(req.file.path, "job-portal-resumes", "raw");
          
-         if (!resumeUploadResult) {
-            return res.status(500).json({
-                message:"Failed to upload resume",
-                success:false,
-            })
-         }
-
          let newApplication= new Application({
             job:jobId,
             applicant:userId,
-            resume: {
-                public_id: resumeUploadResult.public_id,
-                url: resumeUploadResult.url
-            }
          })
          await newApplication.save();
 
@@ -63,10 +42,6 @@ export const applyjob= async(req,res)=>{
 
     } catch (error) {
        console.log(error);
-       // Clean up temp file if it exists and there was an error
-       if (req.file && req.file.path && fs.existsSync(req.file.path)) {
-           fs.unlinkSync(req.file.path);
-       }
        return res.status(500).json({
            message:"Internal server error",
            success:false,
@@ -104,6 +79,11 @@ export const getApplication= async (req,res)=>{
         const app= await Application.find({job:jobId}).sort({createAt:-1}).populate({
             path:"applicant",
             options:{sort:{createdAt:-1}},
+        }).populate({
+            path:"job",
+            populate:{
+                path:'company',
+            }
         })
 
         if(!app || app.length===0){
